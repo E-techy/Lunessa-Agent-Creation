@@ -1,0 +1,198 @@
+/* Button Components */
+.button-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  justify-content: flex-end;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  background-color: var(--accent);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+  background-color: var(--card-bg);
+  color: var(--primary);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+  background-color: var(--secondary-dark);
+  border-color: var(--border);
+}
+
+.btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Add Item Button */
+.add-item-btn {
+  width: 100%;
+  padding: 1rem;
+  background: var(--card-bg);
+  color: var(--accent);
+  border: 1px dashed var(--accent-light);
+  border-radius: var(--radius);
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.add-item-btn:hover {
+  border-style: solid;
+  background: rgba(139, 92, 246, 0.05);
+}
+
+.add-item-btn svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.2s ease;
+}
+
+.add-item-btn:hover svg {
+  transform: scale(1.1);
+}
+
+.add-step-btn,
+.add-issue-btn {
+  background: none;
+  border: 1px dashed var(--accent-light);
+  color: var(--accent);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
+
+.add-step-btn:hover,
+.add-issue-btn:hover {
+  border-style: solid;
+  background: rgba(139, 92, 246, 0.05);
+}
+
+.add-step-btn svg,
+.add-issue-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.add-manual-btn {
+  width: 100%;
+  padding: 1rem;
+  background: var(--card-bg);
+  color: var(--accent);
+  border: 1px dashed var(--accent-light);
+  border-radius: var(--radius);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.add-manual-btn:hover {
+  border-style: solid;
+  background: rgba(139, 92, 246, 0.05);
+}
+
+.add-manual-btn svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.2s ease;
+}
+
+.add-manual-btn:hover svg {
+  transform: scale(1.1);
+}
+
+/* Remove Buttons */
+.remove-item-btn {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: none;
+  border: none;
+  color: var(--error);
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: var(--transition);
+}
+
+.remove-item-btn:hover {
+  background: rgba(239, 68, 68, 0.1);
+  transform: rotate(90deg);
+}
+
+.remove-item-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.remove-step-btn,
+.remove-issue-btn {
+  background: none;
+  border: none;
+  color: var(--error);
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+
+.remove-step-btn:hover,
+.remove-issue-btn:hover {
+  background: rgba(239, 68, 68, 0.1);
+  transform: rotate(90deg);
+}
+
+.remove-step-btn svg,
+.remove-issue-btn svg {
+  width: 14px;
+  height: 14px;
+}

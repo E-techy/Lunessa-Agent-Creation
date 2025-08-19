@@ -1,0 +1,254 @@
+/* All CSS Animations and Keyframes */
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes zoomInRotate {
+  from {
+    opacity: 0;
+    transform: scale(0.3) rotate(-15deg);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1) rotate(5deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  0%,
+  50% {
+    border-color: var(--accent-light);
+  }
+  51%,
+  100% {
+    border-color: transparent;
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes popInBounce {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.2);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes flipInY {
+  from {
+    opacity: 0;
+    transform: perspective(1000px) rotateY(90deg) rotateX(5deg);
+  }
+  50% {
+    opacity: 0.8;
+    transform: perspective(1000px) rotateY(-10deg) rotateX(5deg);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);
+  }
+}
+
+@keyframes wobble {
+  0%,
+  100% {
+    transform: perspective(1000px) rotateY(-5deg) rotateX(5deg) rotate(0deg);
+  }
+  25% {
+    transform: perspective(1000px) rotateY(-3deg) rotateX(3deg) rotate(1deg);
+  }
+  50% {
+    transform: perspective(1000px) rotateY(-7deg) rotateX(7deg) rotate(-1deg);
+  }
+  75% {
+    transform: perspective(1000px) rotateY(-4deg) rotateX(4deg) rotate(0.5deg);
+  }
+}
+
+@keyframes rainbowShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes slideInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes spinIn {
+  from {
+    opacity: 0;
+    transform: rotate(360deg) scale(0);
+  }
+  50% {
+    opacity: 0.7;
+    transform: rotate(180deg) scale(1.2);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+@keyframes elasticGrow {
+  0% {
+    height: 0%;
+    opacity: 0;
+    transform: scaleY(0) scaleX(1.2);
+  }
+  50% {
+    height: calc(var(--final-height) + 20%);
+    opacity: 0.8;
+    transform: scaleY(1.2) scaleX(0.8);
+  }
+  70% {
+    height: calc(var(--final-height) - 5%);
+    transform: scaleY(0.9) scaleX(1.1);
+  }
+  to {
+    height: var(--final-height);
+    opacity: 1;
+    transform: scaleY(1) scaleX(1);
+  }
+}
+
+@keyframes drawLine {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseGlow {
+  0%,
+  100% {
+    box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.8),
+      0 0 30px rgba(139, 92, 246, 0.4);
+  }
+}
+
+@keyframes shine {
+  0% {
+    transform: rotate(45deg) translateX(-100%);
+  }
+  50% {
+    transform: rotate(45deg) translateX(100%);
+  }
+  100% {
+    transform: rotate(45deg) translateX(100%);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4);
+  }
+  50% {
+    box-shadow: 0 4px 14px rgba(139, 92, 246, 0.6),
+      0 0 20px rgba(139, 92, 246, 0.3);
+  }
+}
+
+/* Animation Utility Classes */
+.fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}

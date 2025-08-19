@@ -1,0 +1,23 @@
+/* Main CSS File - Imports all component styles */
+
+/* Base Styles */
+@import './css/variables.css';
+@import './css/base.css';
+
+/* Layout Styles */
+@import './css/layouts/hero.css';
+@import './css/layouts/main.css';
+
+/* Component Styles */
+@import './css/components/header.css';
+@import './css/components/card.css';
+@import './css/components/progress.css';
+@import './css/components/forms.css';
+@import './css/components/buttons.css';
+@import './css/components/items.css';
+@import './css/components/import.css';
+@import './css/components/footer.css';
+
+/* Utility Styles */
+@import './css/utilities/animations.css';
+@import './css/utilities/responsive.css';

@@ -1,0 +1,113 @@
+/* Import Section Styles */
+.import-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+}
+
+.import-container {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 3rem 2rem;
+  text-align: center;
+  background: var(--card-bg);
+  cursor: pointer;
+  transition: var(--transition);
+  margin-bottom: 1.5rem;
+}
+
+.import-container:hover {
+  border-color: var(--accent-light);
+  background: rgba(139, 92, 246, 0.02);
+}
+
+.import-container.dragover {
+  border-color: var(--accent);
+  background: rgba(139, 92, 246, 0.08);
+  border-style: solid;
+  transform: scale(1.02);
+  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.15);
+}
+
+.import-icon {
+  width: 64px;
+  height: 64px;
+  background: var(--secondary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  transition: var(--transition);
+}
+
+.import-container:hover .import-icon {
+  background: var(--accent-light);
+}
+
+.import-container:hover .import-icon svg {
+  color: white;
+}
+
+.import-icon svg {
+  width: 24px;
+  height: 24px;
+  color: var(--text-light);
+  transition: var(--transition);
+}
+
+.import-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.import-description {
+  color: var(--text-light);
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.import-supported {
+  color: var(--text-light);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.file-type-badge {
+  display: inline-block;
+  background: var(--accent-light);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin: 0 0.25rem;
+}
+
+.drag-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(139, 92, 246, 0.1);
+  backdrop-filter: blur(2px);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.drag-overlay.active {
+  display: flex;
+}
+
+.drag-message {
+  background: white;
+  border: 2px dashed var(--accent);
+  border-radius: var(--radius);
+  padding: 2rem;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+}

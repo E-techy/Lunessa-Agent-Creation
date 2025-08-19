@@ -1,0 +1,26 @@
+/* Main Content Layout */
+.container {
+  max-width: 1200px;
+  margin: 4rem auto 2rem;
+  padding: 0 1.5rem;
+  position: relative;
+}
+
+.page-header {
+  margin-bottom: 2.5rem;
+}
+
+.page-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.025em;
+}
+
+.page-description {
+  color: var(--text-light);
+  font-size: 1rem;
+  font-weight: 400;
+  max-width: 700px;
+}

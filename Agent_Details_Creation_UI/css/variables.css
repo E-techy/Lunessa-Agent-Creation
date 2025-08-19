@@ -1,0 +1,24 @@
+/* CSS Variables and Global Configuration */
+:root {
+  --primary: #18181b; /* Deep Charcoal */
+  --primary-light: #27272a;
+  --primary-dark: #0a0a0b;
+  --secondary: #f4f4f5; /* Light Gray */
+  --secondary-dark: #e4e4e7;
+  --accent: #8b5cf6; /* Violet */
+  --accent-light: #a78bfa;
+  --accent-dark: #7c3aed;
+  --text: #18181b;
+  --text-light: #71717a;
+  --bg: #ffffff;
+  --card-bg: #ffffff;
+  --border: #e4e4e7;
+  --border-light: #f4f4f5;
+  --success: #10b981;
+  --error: #ef4444;
+  --radius: 8px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.05);
+  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
