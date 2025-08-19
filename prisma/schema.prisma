@@ -1,0 +1,107 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// 1️⃣ Customer Service Agents model
+model CustomerServiceAgents {
+  id                        String               @id @default(auto()) @map("_id") @db.ObjectId
+  companyName               String
+  establishmentDate         DateTime
+  companyOwnerName          String
+  companyHumanServiceNumber String
+  companyEmail              String               @unique
+  companyDescription        String
+  agentId                   String               @unique
+  agentName                 String
+  username                  String               @unique // New unique username field
+  availableTokens           Int                  @default(0)
+  items                     Item[]
+
+  // New fields
+  lastModified              DateTime             @default(now())
+  modificationHistory       AgentModification[]
+}
+
+// Embedded Item schema
+type Item {
+  itemName                      String
+  itemCode                      String
+  itemInitialWorkingExplanation String
+  itemRunningSteps              String[]
+  commonProblemsSolutions       ProblemSolution[]
+}
+
+type ProblemSolution {
+  problem  String
+  solution String
+}
+
+// 2️⃣ Agent Usage Statistics
+model AgentUsageStatistics {
+  id                   String                 @id @default(auto()) @map("_id") @db.ObjectId
+  agentId              String                 @unique
+  agentName            String
+  usageLogs            UsageLog[]
+  satisfactionRate     Int                    @default(0) // Current satisfaction rate in percentage
+  satisfactionRateLogs SatisfactionRateLog[]  // History of review stars
+  customerReviews      CustomerReview[]
+}
+
+type UsageLog {
+  tokensUsed Int
+  timestamp  DateTime @default(now())
+}
+
+type SatisfactionRateLog {
+  reviewStar Int
+  timestamp  DateTime @default(now())
+}
+
+type CustomerReview {
+  username   String
+  comment    String
+  reviewStar Int
+  timestamp  DateTime @default(now())
+}
+
+model AgentRequestsHandledLogs {
+  id                   String              @id @default(auto()) @map("_id") @db.ObjectId
+  agentId              String              @unique
+  agentName            String
+  totalRequestsHandled Int                 @default(0)
+  requestLogs          RequestHandledLog[]
+}
+
+type RequestHandledLog {
+  timestamp DateTime @default(now())
+}
+
+// 3️⃣ New Model: Company Agents Registered
+model CompanyAgentsRegistered {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  totalAgents Int           @default(0)
+  agents      AgentRecord[]
+}
+
+type AgentRecord {
+  agentId   String
+  agentName String
+  username  String
+}
+
+// Embedded type for agent modification history
+type AgentModification {
+  timestamp                 DateTime @default(now())
+  items                     Item[]
+  companyName               String
+  establishmentDate         DateTime
+  companyOwnerName          String
+  companyHumanServiceNumber String
+  companyEmail              String
+  companyDescription        String
+}
