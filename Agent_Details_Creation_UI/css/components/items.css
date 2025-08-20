@@ -36,9 +36,6 @@
 }
 
 /* Implementation Steps Styles */
-.implementation-steps {
-  margin-bottom: 0.75rem;
-}
 
 .step-input-group {
   display: flex;
@@ -53,10 +50,6 @@
 }
 
 /* Issues & Solutions Styles */
-.issues-solutions {
-  margin-bottom: 0.75rem;
-}
-
 .issue-solution-group {
   margin-bottom: 0.75rem;
 }

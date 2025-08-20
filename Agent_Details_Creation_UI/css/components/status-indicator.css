@@ -1,0 +1,96 @@
+/* Status Indicator Styles */
+.status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.25rem;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.status-icon{
+  display: flex;
+  justify-content: center;
+  gap: 3px;
+}
+.status-indicator svg {
+  width: 20px;
+  height: 19px;
+  flex-shrink: 0;
+}
+
+/* Status variants */
+.status-create {
+  background: linear-gradient(135deg, #ECFDF5, #D1FAE5);
+  color: #059669;
+  border-color: #A7F3D0;
+}
+
+.status-edit {
+  background: linear-gradient(135deg, #FFFBEB, #FEF3C7);
+  color: #D97706;
+  border-color: #FCD34D;
+}
+
+.status-list {
+  background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+  color: #2563EB;
+  border-color: #93C5FD;
+}
+
+.status-success {
+  background: linear-gradient(135deg, #ECFDF5, #D1FAE5);
+  color: #059669;
+  border-color: #A7F3D0;
+}
+
+.status-error {
+  background: linear-gradient(135deg, #FEF2F2, #FECACA);
+  color: #DC2626;
+  border-color: #FCA5A5;
+}
+
+.status-warning {
+  background: linear-gradient(135deg, #FFFBEB, #FEF3C7);
+  color: #D97706;
+  border-color: #FCD34D;
+}
+
+.status-info {
+  background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+  color: #2563EB;
+  border-color: #93C5FD;
+}
+
+/* Animation for status changes */
+.status-indicator.animate-in {
+  animation: statusSlideIn 0.4s ease-out;
+}
+
+@keyframes statusSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .status-indicator {
+    font-size: 0.8125rem;
+    padding: 0.75rem 1rem;
+  }
+  
+  .status-indicator svg {
+    width: 16px;
+    height: 16px;
+  }
+}

@@ -1,12 +1,31 @@
 // UI utilities and notifications
 class UIUtils {
     static showNotification(message, type = 'success') {
+        // Get background color based on type
+        let backgroundColor;
+        switch(type) {
+            case 'success':
+                backgroundColor = '#16A34A'; // green-600
+                break;
+            case 'error':
+                backgroundColor = '#DC2626'; // red-600
+                break;
+            case 'warning':
+                backgroundColor = '#D97706'; // orange-600
+                break;
+            case 'info':
+                backgroundColor = 'linear-gradient(135deg, var(--accent), var(--accent-dark))'; 
+                break;
+            default:
+                backgroundColor = '#16A34A';
+        }
+        
         const notification = document.createElement('div');
         notification.className = `notification ${type}`;
         notification.innerHTML = `
-            <div style="position: fixed; bottom: 20px; right: 20px; background: ${type === 'success' ? 'var(--success)' : 'var(--error)'}; color: white; padding: 1rem 1.5rem; border-radius: var(--radius); box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 0.5rem; z-index: 1000; animation: fadeInUp 0.3s ease-out; max-width: 400px;">
+            <div style="position: fixed; bottom: 20px; right: 20px; background: ${backgroundColor}; color: white; padding: 1rem 1.5rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 0.75rem; z-index: 1000; animation: fadeInUp 0.3s ease-out; max-width: 400px; font-weight: 500;">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; flex-shrink: 0;">
-                    ${ICONS[type]}
+                    ${ICONS[type] || ICONS.success}
                 </svg>
                 <span>${message}</span>
             </div>
@@ -15,9 +34,12 @@ class UIUtils {
         
         // Remove notification after duration
         setTimeout(() => {
-            notification.style.opacity = '0';
-            notification.style.transform = 'translateY(20px)';
-            notification.style.transition = 'all 0.3s ease';
+            const notificationDiv = notification.firstElementChild;
+            if (notificationDiv) {
+                notificationDiv.style.opacity = '0';
+                notificationDiv.style.transform = 'translateY(20px)';
+                notificationDiv.style.transition = 'all 0.3s ease';
+            }
             setTimeout(() => {
                 if (document.body.contains(notification)) {
                     document.body.removeChild(notification);

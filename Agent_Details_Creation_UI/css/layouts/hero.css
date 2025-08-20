@@ -2,7 +2,7 @@
 .hero-section {
   position: relative;
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
-  min-height: 100vh;
+  min-height: 60vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
