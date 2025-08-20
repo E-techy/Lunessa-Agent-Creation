@@ -27,7 +27,6 @@ app.get("/create_new_agent", (req, res) => {
 // Get Your Agents 
 app.post('/get_agents',authenticateUser, async (req, res)=>{
    const username = req.body.username;
-   console.log(username);
    
   // find the agents associated with the user
     const yourAgents = await fetchAllAssociatedAgents(username);
@@ -36,6 +35,8 @@ app.post('/get_agents',authenticateUser, async (req, res)=>{
 
 })
 
+
+// Create a new ai agent using fresh details
 app.post("/create_new_agent", authenticateUser,async (req, res)=>{
     // add new agent
     console.log("user detected");
@@ -45,6 +46,17 @@ app.post("/create_new_agent", authenticateUser,async (req, res)=>{
     res.send(result);
     
 })
+
+// Modify your existing agents using their agentId 
+
+app.post("/modify_agent_details", authenticateUser, async (req, res)=>{
+  const result = await addOrUpdateAgent(req,secret);
+  console.log("user came");
+  
+  res.send(result);
+})
+
+
 
 // Start server
 app.listen(PORT, () => {
