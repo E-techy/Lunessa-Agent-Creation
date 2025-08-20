@@ -16,7 +16,12 @@
     <script src="js/form-controller.js"></script>
     <script src="js/file-handler.js"></script>
     <script src="js/event-listeners.js"></script>
+    <script src="js/navigation-controller.js"></script>
+    <script src="js/agent-data.js"></script>
     <script src="js/main.js"></script>
+    <style>
+        
+    </style>
 </head>
 <body>
     <!-- Hero Section -->
@@ -134,7 +139,53 @@
             </div>
         </div>
     </div>
-
+<div class="container-previous-agent" id="agent-management">
+    <!-- Agent Navigation -->
+    <div class="agent-navigation">
+        <div class="nav-header">
+            <h1 class="nav-title">Agent Management</h1>
+            <div class="nav-buttons">
+                <button id="yourAgentsBtn" class="nav-btn nav-btn-primary active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    Your Agents
+                </button>
+                <button id="createNewAgentBtn" class="nav-btn nav-btn-secondary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Create New Agent
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Agent List View -->
+    <div id="agentListView" class="agent-list-view">
+        <div class="agent-list-header">
+            <div class="list-title">
+                <h2>Your Agents</h2>
+                <span class="agent-count" id="agentCount">2 agent(s)</span>
+            </div>
+        </div>
+        <div class="agent-list-table">
+            <div class="table-header">
+                <div class="header-cell">Agent Name</div>
+                <div class="header-cell">Agent URL</div>
+                <div class="header-cell">Company</div>
+                <div class="header-cell">Actions</div>
+            </div>
+            <div id="agentListContainer" class="table-body">
+                <!-- Agent rows will be populated here -->
+            </div>
+        </div>
+    </div>
+</div>
     <!-- Main Content -->
     <div class="container" id="company-form">
         <div class="page-header">
@@ -165,7 +216,28 @@
             </div>
             <div class="card-body">
                 <form id="companyAgentForm">
+                    <!-- Status Indicator -->
+                    <div class="status-indicator status-create" id="formStatusIndicator" style="display: none;">
+                        <span id="formStatusText" class="status-icon">Creating New Agent</span>
+                    </div>
+
                     <div class="form-grid">
+                        <div class="form-group" id="agentIdGroup" style="display: none;">
+                            <label for="agentId">Agent ID</label>
+                            <div class="input-container">
+                                <input type="text" id="agentId" name="agentId" readonly>
+                                <div class="input-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                        <polyline points="14 2 14 8 20 8"></polyline>
+                                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                                        <polyline points="10 9 9 9 8 9"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label for="agentName">Agent Name</label>
                             <div class="input-container">
@@ -299,18 +371,8 @@
 
 
                     <div class="button-group">
-                        <button type="reset" class="btn btn-secondary">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="1 4 1 10 7 10"></polyline>
-                                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-                            </svg>
-                            Reset All
-                        </button>
                         <button type="submit" class="btn btn-primary">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                            </svg>
-                            Submit Details
+                            Save Changes
                         </button>
                     </div>
                 </form>

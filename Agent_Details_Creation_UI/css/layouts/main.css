@@ -4,6 +4,7 @@
   margin: 4rem auto 2rem;
   padding: 0 1.5rem;
   position: relative;
+  display: none;
 }
 
 .page-header {

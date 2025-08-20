@@ -15,8 +15,10 @@
 @import './css/components/forms.css';
 @import './css/components/buttons.css';
 @import './css/components/items.css';
+@import './css/components/status-indicator.css';
 @import './css/components/import.css';
 @import './css/components/footer.css';
+@import './css/components/agent-navigation.css';
 
 /* Utility Styles */
 @import './css/utilities/animations.css';

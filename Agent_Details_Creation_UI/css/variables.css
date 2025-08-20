@@ -1,24 +1,73 @@
 /* CSS Variables and Global Configuration */
 :root {
-  --primary: #18181b; /* Deep Charcoal */
-  --primary-light: #27272a;
-  --primary-dark: #0a0a0b;
-  --secondary: #f4f4f5; /* Light Gray */
-  --secondary-dark: #e4e4e7;
-  --accent: #8b5cf6; /* Violet */
-  --accent-light: #a78bfa;
-  --accent-dark: #7c3aed;
-  --text: #18181b;
-  --text-light: #71717a;
-  --bg: #ffffff;
-  --card-bg: #ffffff;
-  --border: #e4e4e7;
-  --border-light: #f4f4f5;
-  --success: #10b981;
-  --error: #ef4444;
+  /* Primary Colors - Deep Charcoal */
+  --primary: #18181B; /* Deep Charcoal */
+  --primary-light: #27272A;
+  --primary-lighter: #3F3F46;
+  --primary-dark: #0A0A0B;
+  --primary-50: #FAFAFA;
+  --primary-100: #F4F4F5;
+  --primary-200: #E4E4E7;
+  --primary-300: #D4D4D8;
+  --primary-600: #52525B;
+  --primary-700: #3F3F46;
+  --primary-800: #27272A;
+  --primary-900: #18181B;
+  
+  /* Secondary Colors - Light Gray */
+  --secondary: #F4F4F5; /* Light Gray */
+  --secondary-dark: #E4E4E7;
+  --secondary-light: #FAFAFA;
+  
+  /* Accent Colors - Violet */
+  --accent: #8B5CF6; /* Violet */
+  --accent-light: #A78BFA;
+  --accent-lighter: #C4B5FD;
+  --accent-dark: #7C3AED;
+  --accent-darker: #6D28D9;
+  --accent-50: #F5F3FF;
+  --accent-100: #EDE9FE;
+  --accent-200: #DDD6FE;
+  
+  /* Text Colors */
+  --text: #18181B;
+  --text-light: #71717A;
+  --text-lighter: #A1A1AA;
+  --text-white: #FFFFFF;
+  --text-secondary: #6B7280;
+  --text-tertiary: #9CA3AF;
+  
+  /* Background Colors */
+  --bg: #FFFFFF;
+  --bg-secondary: #F4F4F5;
+  --bg-accent: #F5F3FF;
+  --card-bg: #FFFFFF;
+  
+  /* Border Colors */
+  --border: #E4E4E7;
+  --border-light: #F4F4F5;
+  --border-accent: #D1D5DB;
+  
+  /* Status Colors */
+  --success: #10B981;
+  --success-50: #ECFDF5;
+  --success-600: #16A34A;
+  --success-700: #15803D;
+  --error: #EF4444;
+  --error-50: #FEF2F2;
+  --error-100: #FEE2E2;
+  --error-600: #DC2626;
+  --warning: #F59E0B;
+  --warning-50: #FFFBEB;
+  
+  /* Design Tokens */
   --radius: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
   --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: all 0.15s ease;
 }

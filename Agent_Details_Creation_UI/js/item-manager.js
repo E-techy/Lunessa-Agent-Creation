@@ -61,4 +61,58 @@ class ItemManager {
         this.itemCount = 0;
         this.progressTracker.updateProgress();
     }
+    
+    // Alias for addNewItem for compatibility
+    addItem(itemData = null) {
+        return this.addNewItem(itemData);
+    }
+    
+    // Get all items data
+    getItems() {
+        const items = [];
+        const itemCards = this.itemsContainer.querySelectorAll('.item-card');
+        
+        itemCards.forEach(card => {
+            const itemId = card.id;
+            const nameInput = card.querySelector(`input[name="${itemId}-name"]`);
+            const descInput = card.querySelector(`textarea[name="${itemId}-initial"]`);
+            const codeInput = card.querySelector(`input[name="${itemId}-code"]`);
+            
+            if (nameInput && nameInput.value.trim()) {
+                // Collect implementation steps
+                const implementationSteps = [];
+                const stepInputs = card.querySelectorAll('input[name^="' + itemId + '-step-"]');
+                stepInputs.forEach(stepInput => {
+                    if (stepInput.value.trim()) {
+                        implementationSteps.push(stepInput.value.trim());
+                    }
+                });
+                
+                // Collect issues and solutions
+                const issuesAndSolutions = [];
+                const issueInputs = card.querySelectorAll('input[name^="' + itemId + '-issue-"]');
+                const solutionInputs = card.querySelectorAll('input[name^="' + itemId + '-solution-"]');
+                
+                issueInputs.forEach((issueInput, index) => {
+                    const correspondingSolution = solutionInputs[index];
+                    if (issueInput.value.trim() && correspondingSolution && correspondingSolution.value.trim()) {
+                        issuesAndSolutions.push({
+                            issue: issueInput.value.trim(),
+                            solution: correspondingSolution.value.trim()
+                        });
+                    }
+                });
+                
+                items.push({
+                    name: nameInput.value.trim(),
+                    description: descInput ? descInput.value.trim() : '',
+                    itemCode: codeInput ? codeInput.value.trim() : '',
+                    implementationSteps: implementationSteps,
+                    issuesAndSolutions: issuesAndSolutions
+                });
+            }
+        });
+        
+        return items;
+    }
 }
