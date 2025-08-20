@@ -14,7 +14,7 @@ model CustomerServiceAgents {
   establishmentDate         DateTime
   companyOwnerName          String
   companyHumanServiceNumber String
-  companyEmail              String               @unique
+  companyEmail              String               
   companyDescription        String
   agentId                   String               @unique
   agentName                 String

@@ -72,12 +72,60 @@
 // console.log("❌ Bad Validation Result:", badValidation);
 
 
-const createUniqueAgentId = require("./utils/create_unique_agent_id");
+// const createUniqueAgentId = require("./utils/create_unique_agent_id");
 
-const username = "adminUser";
-const agentName = "Priya Sharma";
-const secret = "MY_SUPER_SECRET_KEY";
+// const username = "adminUser";
+// const agentName = "Priya Sharma";
+// const secret = "MY_SUPER_SECRET_KEY";
 
-const agentId = createUniqueAgentId(username, agentName, secret);
+// const agentId = createUniqueAgentId(username, agentName, secret);
 
-console.log("Generated Agent ID:", agentId);
+// console.log("Generated Agent ID:", agentId);
+
+// require('dotenv').config();
+
+
+// const jwt = require("jsonwebtoken");
+
+// const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || "super-secret-key";
+
+// // Fake user data
+// const userData = {
+//   email: "aman@examples.com",
+//   username: "aman1234",
+//   name: "Aman Kumar",
+//   gender: "male",
+//   phone: "+911234567890",
+//   dob: "2000-05-12T00:00:00.000+00:00",
+//   nationality: "Indian",
+//   address: "Ranchi, Jharkhand"
+// };
+
+// // Generate JWT
+// const token = jwt.sign(userData, JWT_SECRET_KEY, { expiresIn: "30h" });
+
+// console.log("✅ Fake JWT Token:\n", token);
+
+// //
+
+
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFtYW5AZXhhbXBsZXMuY29tIiwidXNlcm5hbWUiOiJhbWFuMTIzNCIsIm5hbWUiOiJBbWFuIEt1bWFyIiwiZ2VuZGVyIjoibWFsZSIsInBob25lIjoiKzkxMTIzNDU2Nzg5MCIsImRvYiI6IjIwMDAtMDUtMTJUMDA6MDA6MDAuMDAwKzAwOjAwIiwibmF0aW9uYWxpdHkiOiJJbmRpYW4iLCJhZGRyZXNzIjoiUmFuY2hpLCBKaGFya2hhbmQiLCJpYXQiOjE3NTU3MjA5MjgsImV4cCI6MTc1NTgyODkyOH0.LcuMNJdFc1l2jfT4HWU8F-oMvyeiCihoIGAu103Yw_s
+
+
+const jwt = require("jsonwebtoken");
+
+const JWT_SECRET_KEY = "7xdP6EGzCqIrx4aAAQvHyvVfKxI9fkSdEyMyllB+uX8=";
+
+const payload = {
+  email: "aman@examples.com",
+  username: "aman1234",
+  name: "Aman Kumar",
+  gender: "male",
+  phone: "+911234567890",
+  dob: "2000-05-12T00:00:00.000+00:00",
+  nationality: "Indian",
+  address: "Ranchi, Jharkhand",
+};
+
+const token = jwt.sign(payload, JWT_SECRET_KEY, { expiresIn: "1d" });
+console.log(token);

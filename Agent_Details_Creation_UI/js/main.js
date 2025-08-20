@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const dynamicContentManager = new DynamicContentManager(progressTracker);
     const itemManager = new ItemManager(itemsContainer, progressTracker, dynamicContentManager);
     const fileHandler = new FileHandler(importContainer, fileInput, itemManager);
-    const formController = new FormController(form, itemManager);
-    const eventListeners = new EventListeners(itemManager, fileHandler, formController, progressTracker);
+    // const formController = new FormController(form, itemManager);
+    // const eventListeners = new EventListeners(itemManager, fileHandler, formController, progressTracker);
     
     // Initialize navigation controller for agent management
     const navigationController = new NavigationController();
@@ -58,14 +58,14 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Show loading state
             const submitBtn = form.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = `
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="animate-spin" style="animation: spin 1s linear infinite; width: 16px; height: 16px; margin-right: 8px;">
-                    <path d="M21 12a9 9 0 11-6.219-8.56"/>
-                </svg>
-                Processing...
-            `;
-            submitBtn.disabled = true;
+            // const originalText = submitBtn.innerHTML;
+            // submitBtn.innerHTML = `
+            //     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="animate-spin" style="animation: spin 1s linear infinite; width: 16px; height: 16px; margin-right: 8px;">
+            //         <path d="M21 12a9 9 0 11-6.219-8.56"/>
+            //     </svg>
+            //     Processing...
+            // `;
+            // submitBtn.disabled = true;
             
             // Collect form data
             const formData = new FormData(form);
