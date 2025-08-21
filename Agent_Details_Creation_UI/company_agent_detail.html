@@ -17,15 +17,11 @@
     <script src="js/file-handler.js"></script>
     <script src="js/event-listeners.js"></script>
     <script src="js/navigation-controller.js"></script>
-    <script src="js/agent-data.js"></script>
     <script src="js/main.js"></script>
 
     <script src="js/fetchYourAgents.js"></script>
+    <script src="js/modify_agent_details.js"></script>
 
-   
-    <style>
-        
-    </style>
 </head>
 <body>
     <!-- Hero Section -->
@@ -301,7 +297,7 @@
                         <div class="form-group">
                             <label for="customerServiceNumber">Customer Service Number</label>
                             <div class="input-container">
-                                <input type="tel" id="customerServiceNumber" name="customerServiceNumber" placeholder="1234567890" pattern="[0-9+\-\s()]*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9+\-\s()]/g, '')" required>
+                                <input type="tel" id="customerServiceNumber" name="customerServiceNumber" placeholder="+123(456)7890" pattern="[0-9\+\(\)]*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9\+\(\)]/g, '')" required>
                                 <div class="input-icon">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
@@ -375,8 +371,11 @@
 
 
                     <div class="button-group">
-                        <button class="btn btn-primary" id="saveNewAgentBtn">
+                        <button class="modifyAgentDetailsBtn" style="display: none;">
                             Save Changes
+                        </button>
+                        <button class="btn btn-primary" id="saveNewAgentBtn">
+                            Submit Details
                         </button>
                     </div>
                 </form>
@@ -391,7 +390,6 @@
         </div>
     </footer>
 </body>
-
  <!-- // new code  -->
     <script src="js/saveNewAgentBtn.js"></script>
 </html>

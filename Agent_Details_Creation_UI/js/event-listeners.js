@@ -28,8 +28,8 @@ class EventListeners {
         });
         
         // Track form field changes (initial fields)
-        document.querySelectorAll('input, textarea, select').forEach(input => {
-            input.addEventListener('input', () => this.progressTracker.updateProgress());
-        });
+        // document.querySelectorAll('input, textarea, select').forEach(input => {
+        //     input.addEventListener('input', () => this.progressTracker.updateProgress());
+        // });
     }
 }
