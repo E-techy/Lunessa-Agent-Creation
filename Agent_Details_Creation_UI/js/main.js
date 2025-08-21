@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const itemManager = new ItemManager(itemsContainer, progressTracker, dynamicContentManager);
     const fileHandler = new FileHandler(importContainer, fileInput, itemManager);
     // const formController = new FormController(form, itemManager);
-    // const eventListeners = new EventListeners(itemManager, fileHandler, formController, progressTracker);
+    const eventListeners = new EventListeners(itemManager, fileHandler, progressTracker);
     
     // Initialize navigation controller for agent management
     const navigationController = new NavigationController();
@@ -85,8 +85,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Simulate processing delay
             setTimeout(() => {
                 // Reset button state
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
+                // submitBtn.innerHTML = originalText;
+                // submitBtn.disabled = false;
                 
                 // Save agent data
                 if (typeof agentDataManager !== 'undefined') {

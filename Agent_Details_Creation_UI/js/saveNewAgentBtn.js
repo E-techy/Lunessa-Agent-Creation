@@ -77,8 +77,31 @@ document.getElementById("saveNewAgentBtn").addEventListener("click", async () =>
         const agentData = data.agent;
         console.log("agent Data:",agentData);
         
-        const agentUrl = `http://localhost:3001/chat_agent?agentId=${data.agent.agentId}&agentName=${data.agent.agentName}`;
+        const agentUrl = `http://localhost:3001/chat_agent?agentId=${data.agent.agentId}&agentName=${encodeURIComponent(data.agent.agentName)}`;
         console.log("agentUrl:", agentUrl);
+        
+        // Update localStorage with new agent data
+        const currentAgents = JSON.parse(localStorage.getItem('agentsList') || '[]');
+        const newAgentData = {
+            agentId: data.agent.agentId,
+            agentName: agentData.agentName,
+            companyName: agentData.companyName,
+            establishmentDate: agentData.establishmentDate,
+            companyOwnerName: agentData.companyOwnerName,
+            companyHumanServiceNumber: agentData.companyHumanServiceNumber,
+            companyEmail: agentData.companyEmail,
+            companyDescription: agentData.companyDescription,
+            items: agentData.items
+        };
+        
+        currentAgents.push(newAgentData);
+        localStorage.setItem('agentsList', JSON.stringify(currentAgents));
+        
+        // Refresh the agent data manager if it exists
+        if (window.agentDataManager) {
+            window.agentDataManager.loadAgentsFromLocalStorage();
+            window.agentDataManager.populateAgentList();
+        }
         
 
     } catch (err) {
