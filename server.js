@@ -3,6 +3,7 @@ const addOrUpdateAgent = require('./utils/add_new_agent');
 const authenticateUser = require("./utils/authenticate_user");
 const cookieParser = require("cookie-parser");
 const fetchAllAssociatedAgents = require('./utils/fetch_all_associated_agents');
+const deleteAgent = require("./utils/delete_agent");
 
 
 
@@ -54,6 +55,19 @@ app.post("/modify_agent_details", authenticateUser, async (req, res)=>{
   console.log("user came");
   
   res.send(result);
+})
+
+app.post("/delete_agent", authenticateUser, async (req, res)=>{
+  // delete agent using agent id and username
+  const agentId = req.query.agentId;
+  console.log(agentId);
+  const username = req.body.username;
+  
+  
+  const result =  await deleteAgent(username, agentId);
+  
+  res.send(result);
+
 })
 
 

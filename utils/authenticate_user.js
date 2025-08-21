@@ -18,10 +18,11 @@ function authenticateUser(req, res, next) {
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
     console.log(decoded);
-    
 
     // Attach decoded info to request
-    req.body.username=decoded.username;
+    if (!req.body) req.body = {}; 
+    req.body.username = decoded.username;
+    
 
     // Continue to next middleware/handler
     next();

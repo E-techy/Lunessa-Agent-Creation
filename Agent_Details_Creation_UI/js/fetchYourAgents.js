@@ -436,26 +436,46 @@ class AgentDataManager {
         toggleButtonsForMode(false);
     }
 
-    deleteAgent(agentId) {
-        const agent = this.getAgentById(agentId);
-        if (!agent) return;
+    async deleteAgent(agentId) {
+    const agent = this.getAgentById(agentId);
+    if (!agent) return;
 
-        if (confirm(`Are you sure you want to delete the agent "${agent.agentName}"? This action cannot be undone.`)) {
-            this.agents = this.agents.filter(a => a.id !== agentId);
-            
-            // Update localStorage
-            this.updateLocalStorage();
-            
-            // Refresh the display
-            this.populateAgentList();
-            
-            // If we were editing this agent, clear the form
-            if (this.currentEditingAgent && this.currentEditingAgent.id === agentId) {
-                this.clearForm();
-                this.switchToListView();
+    if (confirm(`Are you sure you want to delete the agent "${agent.agentName}"? This action cannot be undone.`)) {
+        try {
+            // Send request to backend
+            const response = await fetch(`/delete_agent?agentId=${agentId}`, {
+                method: "POST",
+                credentials: "include" // important: sends cookies for auth
+            });
+
+            const result = await response.json();
+            console.log("Delete Agent Response:", result);
+
+            if (result.success) {
+                // Remove from local list only if server confirmed deletion
+                this.agents = this.agents.filter(a => a.id !== agentId);
+
+                // Update localStorage
+                this.updateLocalStorage();
+
+                // Refresh the display
+                this.populateAgentList();
+
+                // If we were editing this agent, clear the form
+                if (this.currentEditingAgent && this.currentEditingAgent.id === agentId) {
+                    this.clearForm();
+                    this.switchToListView();
+                }
+            } else {
+                alert(`Failed to delete agent: ${result.message}`);
             }
+        } catch (err) {
+            console.error("❌ Error deleting agent:", err);
+            alert("An error occurred while deleting the agent.");
         }
     }
+}
+
 
     updateLocalStorage() {
         try {
