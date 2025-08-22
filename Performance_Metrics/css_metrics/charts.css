@@ -66,6 +66,30 @@
     border-color: var(--accent);
 }
 
+.control-btn.refresh-btn {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: none;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
+}
+
+.control-btn.refresh-btn:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.control-btn.refresh-btn svg {
+    transition: transform 0.3s ease;
+}
+
+.control-btn.refresh-btn:hover svg {
+    transform: rotate(180deg);
+}
+
 /* Time Period Buttons */
 .time-period-buttons {
     display: flex;
