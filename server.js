@@ -101,6 +101,7 @@ app.post("/performance_metrics/:metricType", authenticateUser, async (req, res) 
     const { username, agentId } = req.body;
     const { metricType } = req.params || undefined;
     const { timestamp } = req.query; // 👈 timestamp for reviews
+    const { timeframe } = req.query || "lifetime";
 
     let result;
 
@@ -129,7 +130,7 @@ app.post("/performance_metrics/:metricType", authenticateUser, async (req, res) 
         if (!agentId) {
           return res.status(400).json({ error: "agentId is required for usage_stats" });
         }
-        result = await getAgentUsageStats(username, agentId);
+        result = await getAgentUsageStats(username, agentId, timeframe);
         break;
 
       case "requests_handled":
