@@ -1,0 +1,80 @@
+/* Responsive Design and Media Queries */
+@media (max-width: 1200px) {
+    .dual-chart-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .agent-profile-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .chart-container {
+        height: 300px;
+    }
+
+    .chart-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .chart-controls {
+        justify-content: center;
+    }
+
+    .time-period-buttons {
+        justify-content: center;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .time-period-btn {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.6rem;
+    }
+
+    .metrics-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .reviews-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .history-timeline {
+        padding-left: 1rem;
+    }
+
+    .history-item {
+        margin-left: 0.5rem;
+    }
+
+    .heatmap-grid {
+        grid-template-columns: repeat(12, 1fr);
+    }
+    
+    /* Lifetime heatmap responsive styling */
+    .heatmap-grid[data-period="lifetime"] .heatmap-cell {
+        min-width: 45px;
+        min-height: 45px;
+        font-size: 0.7rem;
+    }
+    
+    .heatmap-grid[data-period="lifetime"] {
+        gap: 3px;
+    }
+}

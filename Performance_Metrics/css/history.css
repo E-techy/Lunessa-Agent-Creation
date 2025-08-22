@@ -1,0 +1,75 @@
+/* History Section and Timeline */
+.history-section {
+    margin-bottom: 3rem;
+}
+
+.history-section h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: var(--accent);
+}
+
+.history-timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.history-timeline::before {
+    content: '';
+    position: absolute;
+    left: 1rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--accent), transparent);
+}
+
+.history-item {
+    position: relative;
+    margin-bottom: 2rem;
+    background: rgba(244, 244, 245, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+    margin-left: 1rem;
+}
+
+.history-marker {
+    position: absolute;
+    left: -1.5rem;
+    top: 1.5rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 3px solid var(--primary);
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.history-header h4 {
+    color: var(--accent);
+    font-size: 1.2rem;
+}
+
+.history-date {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.history-details p {
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+.history-details strong {
+    color: var(--secondary);
+}

@@ -1,0 +1,68 @@
+/* Agent Profile and Info Section */
+.agent-info-section {
+    margin-bottom: 3rem;
+}
+
+.agent-profile-card {
+    background: rgba(244, 244, 245, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.agent-profile-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), rgba(139, 92, 246, 0.3));
+}
+
+.agent-avatar {
+    flex-shrink: 0;
+}
+
+.avatar-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), rgba(139, 92, 246, 0.7));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+}
+
+.agent-details h2 {
+    font-size: 2rem;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    text-transform: capitalize;
+}
+
+.agent-details > p {
+    color: var(--text-light);
+    margin-bottom: 1rem;
+    font-family: monospace;
+}
+
+.company-info h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    text-transform: capitalize;
+}
+
+.company-info p {
+    color: var(--text-light);
+    margin-bottom: 0.3rem;
+}

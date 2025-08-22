@@ -1,0 +1,160 @@
+/* Charts Section */
+.charts-section {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.chart-container-wrapper {
+    background: rgba(244, 244, 245, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+}
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.chart-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--secondary);
+}
+
+.chart-controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.control-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.control-btn:hover {
+    background: rgba(139, 92, 246, 0.8);
+    transform: translateY(-2px);
+}
+
+.control-btn.secondary {
+    background: rgba(244, 244, 245, 0.1);
+    color: var(--secondary);
+    border: 1px solid var(--border);
+}
+
+.control-btn.secondary:hover {
+    background: rgba(244, 244, 245, 0.2);
+    border-color: var(--accent);
+}
+
+/* Time Period Buttons */
+.time-period-buttons {
+    display: flex;
+    gap: 0.5rem;
+    background: rgba(24, 24, 27, 0.6);
+    padding: 0.3rem;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+    flex-wrap: wrap;
+}
+
+.time-period-btn {
+    background: transparent;
+    color: var(--text-light);
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    position: relative;
+    overflow: hidden;
+}
+
+.time-period-btn:hover {
+    background: rgba(139, 92, 246, 0.2);
+    color: var(--accent);
+    transform: translateY(-1px);
+}
+
+.time-period-btn.active {
+    background: var(--accent);
+    color: white;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.time-period-btn.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+    pointer-events: none;
+}
+
+.time-period-btn:active {
+    transform: translateY(0);
+}
+
+.chart-container {
+    position: relative;
+    height: 400px;
+    min-height: 400px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chart-container canvas {
+    max-width: 100% !important;
+    max-height: 100% !important;
+}
+
+.zoom-info {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--accent-light);
+    color: var(--accent);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: 1px solid var(--accent-medium);
+    z-index: 10;
+}
+
+.dual-chart-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
