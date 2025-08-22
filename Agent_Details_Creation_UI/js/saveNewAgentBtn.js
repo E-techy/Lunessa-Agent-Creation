@@ -1,4 +1,9 @@
 document.getElementById("saveNewAgentBtn").addEventListener("click", async () => {
+    // Prevent save during item removal
+    if (window.isRemovingItem) {
+        console.log('Save blocked: Item removal in progress');
+        return;
+    }
     // Collect main form values
     const agentName = document.getElementById("agentName").value.trim();
     const companyName = document.getElementById("companyName").value.trim();

@@ -1,0 +1,68 @@
+/* Chat Demo Styles */
+.bot-demo-container {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    border-radius: 20px;
+    padding: 3rem;
+    margin: 4rem 0;
+}
+
+.chat-preview {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    backdrop-filter: blur(10px);
+}
+
+.chat-message {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    align-items: flex-start;
+}
+
+.chat-message.user {
+    flex-direction: row-reverse;
+}
+
+.chat-avatar {
+    background: var(--accent);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.chat-message.bot .chat-avatar {
+    background: var(--success);
+}
+
+.chat-message > div:last-child {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    flex: 1;
+}
+
+.chat-message.user > div:last-child {
+    background: rgba(139, 92, 246, 0.2);
+}
+
+@media (max-width: 768px) {
+    .chat-message {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .chat-message.user {
+        flex-direction: column;
+        align-items: flex-end;
+    }
+}

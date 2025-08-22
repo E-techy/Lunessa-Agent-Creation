@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const itemManager = new ItemManager(itemsContainer, progressTracker, dynamicContentManager);
     const fileHandler = new FileHandler(importContainer, fileInput, itemManager);
     // const formController = new FormController(form, itemManager);
-    const eventListeners = new EventListeners(itemManager, fileHandler, progressTracker);
+    const eventListeners = new EventListeners(itemManager, fileHandler, null, progressTracker);
     
     // Initialize navigation controller for agent management
     const navigationController = new NavigationController();

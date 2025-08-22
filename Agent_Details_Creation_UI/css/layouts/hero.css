@@ -100,7 +100,7 @@
   color: rgba(255, 255, 255, 0.8);
   margin-bottom: 2.5rem;
   max-width: 500px;
-  animation: slideInFromBottom 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 2.5s
+  animation: slideInFromBottom 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 1s
     both;
   transform: translateY(50px);
   opacity: 0;
@@ -110,7 +110,7 @@
   display: flex;
   gap: 1rem;
   align-items: center;
-  animation: popInBounce 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) 3.5s both;
+  animation: popInBounce 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 1.5s both;
   transform: scale(0);
 }
 

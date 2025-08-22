@@ -23,3 +23,22 @@
 /* Utility Styles */
 @import './css/utilities/animations.css';
 @import './css/utilities/responsive.css';
+
+
+
+/* Agent Navigation Component Styles - Main Index */
+/* Import all component styles */
+
+/* Core Components */
+@import url('./css/agent-navigation/container.css');
+@import url('./css/agent-navigation/nav-header.css');
+@import url('./css/agent-navigation/nav-buttons.css');
+
+/* List and Table Components */
+@import url('./css/agent-navigation/agent-list-view.css');
+@import url('./css/agent-navigation/table.css');
+@import url('./css/agent-navigation/agent-info.css');
+@import url('./css/agent-navigation/action-buttons.css');
+
+/* Form Components */
+@import url('./css/agent-navigation/form.css');

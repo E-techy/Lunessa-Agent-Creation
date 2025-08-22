@@ -1,0 +1,62 @@
+/* Navigation Buttons */
+.nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1.5rem;
+    border-radius: var(--radius-lg);
+    border: 2px solid transparent;
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: var(--transition);
+    backdrop-filter: blur(10px);
+}
+
+.nav-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.nav-btn-primary:hover {
+    background: var(--accent-50);
+    color: var(--accent-dark);
+    border-color: var(--accent-200);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.nav-btn-primary.active {
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: var(--text-white);
+    border-color: var(--accent);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.nav-btn-secondary:hover {
+    background: var(--success-50);
+    color: var(--success-700);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.nav-btn-secondary.active {
+    background: linear-gradient(135deg, var(--success-600), var(--success-700));
+    color: var(--text-white);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+/* Navigation Buttons Responsive Design */
+@media (max-width: 480px) {
+    .nav-btn {
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+    }
+    
+    .nav-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+}

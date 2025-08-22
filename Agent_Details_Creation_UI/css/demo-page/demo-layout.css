@@ -1,0 +1,31 @@
+/* Demo Layout and Base Styles */
+.demo-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.demo-section {
+    margin-bottom: 4rem;
+}
+
+.demo-section h2 {
+    font-size: 2rem;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.demo-section h2 svg {
+    width: 32px;
+    height: 32px;
+    color: var(--primary);
+}
+
+@media (max-width: 768px) {
+    .demo-container {
+        padding: 1rem;
+    }
+}

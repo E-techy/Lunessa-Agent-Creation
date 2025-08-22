@@ -1,0 +1,105 @@
+/* Form Section */
+.form-section {
+    display: none;
+    background: var(--card-bg);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
+}
+
+.form-section.active {
+    display: block;
+}
+
+.container#company-form {
+    display: none;
+}
+
+.container#company-form.active {
+    display: block;
+}
+
+.form-header h2 {
+    color: var(--text);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.form-description {
+    color: var(--text-light);
+    margin-bottom: 2rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: var(--text);
+    font-size: 0.875rem;
+}
+
+.form-group input {
+    padding: 0.75rem;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    transition: var(--transition);
+    background: var(--bg);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.form-group input[readonly] {
+    background-color: var(--bg-secondary);
+    color: var(--text-light);
+    cursor: not-allowed;
+}
+
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.status-list {
+    background: var(--accent-100);
+    color: var(--accent-dark);
+}
+
+.status-create {
+    background: var(--success-50);
+    color: var(--success-700);
+}
+
+.status-edit {
+    background: var(--warning-50);
+    color: #D97706;
+}
+
+/* Form Responsive Design */
+@media (max-width: 480px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}

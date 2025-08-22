@@ -481,7 +481,7 @@ class AgentDataManager {
         try {
             // Convert back to storage format
             const storageFormat = this.agents.map(agent => this.convertToStorageFormat(agent));
-            // localStorage.setItem('agentsList', JSON.stringify(storageFormat));
+            localStorage.setItem('agentsList', JSON.stringify(storageFormat));
             console.log('Updated localStorage with agents:', storageFormat);
         } catch (error) {
             console.error('Error updating localStorage:', error);
@@ -529,15 +529,7 @@ class AgentDataManager {
                 console.log('Updated existing agent:', this.agents[agentIndex]);
             }
         } else {
-            // Create new agent
-            // const newAgent = {
-            //     id: this.generateAgentId(),
-            //     ...formData,
-            //     agentUrl: `http://localhost:3001/chat_agent?agentId=${formData.agentName.toLowerCase().replace(/\s+/g, '-')}&agentName=${encodeURIComponent(formData.agentName)}`,
-            //     products: formData.products || [] // Ensure products are included
-            // };
-            // this.agents.push(newAgent);
-            // console.log('Created new agent:', newAgent);
+            
         }
         
         // Update localStorage

@@ -1,0 +1,66 @@
+/* Demo Tips and Interactive Elements */
+.demo-tips {
+    background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    margin: 2rem 0;
+}
+
+.demo-tips h4 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.demo-tips ul {
+    list-style: none;
+    padding: 0;
+}
+
+.demo-tips li {
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.demo-tips li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    margin-bottom: 2rem;
+}
+
+.back-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+.feature-highlight {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border: 2px dashed var(--primary);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.feature-highlight .icon {
+    width: 48px;
+    height: 48px;
+    color: var(--primary);
+    margin: 0 auto 1rem;
+}

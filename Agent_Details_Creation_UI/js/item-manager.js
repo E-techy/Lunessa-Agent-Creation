@@ -19,19 +19,16 @@ class ItemManager {
         
         this.itemsContainer.appendChild(itemCard);
         
-        // Add event listeners to new inputs
-        itemCard.querySelectorAll('input, textarea').forEach(input => {
-            input.addEventListener('input', () => this.progressTracker.updateProgress());
-        });
-        
         // Add event listeners for dynamic buttons
         this.dynamicContentManager.setupDynamicButtons(itemCard, itemId);
         
         // Scroll to the new item
         itemCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         
-        // Update progress
-        this.progressTracker.updateProgress();
+        // Trigger progress update after a short delay to let DOM settle
+        setTimeout(() => {
+            this.progressTracker.updateProgress();
+        }, 100);
         
         // Populate with data if provided
         if (itemData) {
@@ -42,8 +39,17 @@ class ItemManager {
     removeItem(itemId) {
         const itemToRemove = document.getElementById(itemId);
         
+        if (!itemToRemove) {
+            console.warn('Item to remove not found:', itemId);
+            return;
+        }
+        
+        // Flag to prevent any accidental saves during removal
+        window.isRemovingItem = true;
+        
         UIUtils.animateItemRemoval(itemToRemove, () => {
             this.itemsContainer.removeChild(itemToRemove);
+            
             // Renumber remaining items
             const items = this.itemsContainer.querySelectorAll('.item-card');
             items.forEach((item, index) => {
@@ -51,8 +57,13 @@ class ItemManager {
             });
             this.itemCount = items.length;
             
-            // Update progress
+            // Update progress (visual only - no save)
             this.progressTracker.updateProgress();
+            
+            // Clear the removal flag
+            window.isRemovingItem = false;
+            
+            console.log('Item removed successfully (no save triggered):', itemId);
         });
     }
     

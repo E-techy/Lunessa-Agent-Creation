@@ -1,0 +1,40 @@
+/* AI Capabilities Section Styles */
+.ai-capabilities {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.capability-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border);
+    transition: var(--transition);
+}
+
+.capability-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.capability-card .icon {
+    width: 48px;
+    height: 48px;
+    color: var(--accent);
+    margin-bottom: 1rem;
+}
+
+.capability-card h4 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+    .ai-capabilities {
+        grid-template-columns: 1fr;
+    }
+}
