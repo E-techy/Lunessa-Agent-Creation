@@ -91,7 +91,6 @@ model CompanyAgentsRegistered {
 type AgentRecord {
   agentId   String
   agentName String
-  username  String
 }
 
 // Embedded type for agent modification history

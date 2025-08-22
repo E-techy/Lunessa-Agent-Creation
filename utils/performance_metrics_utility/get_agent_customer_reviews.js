@@ -58,23 +58,23 @@ async function getAgentCustomerReviews(username, agentId, startTimestamp) {
       return { error: `No agent found with ID: ${agentId} for username: ${username}` };
     }
 
-    // 2️⃣ Fetch last 10 reviews older than the given timestamp
-    const reviews = await prisma.AgentCustomerReviews.findMany({
-      where: {
-        agentId,
-        timestamp: {
-          lt: new Date(startTimestamp), // older than given timestamp
-        },
-      },
-      orderBy: { timestamp: "desc" },
-      take: 10,
-      select: {
-        username: true,
-        comment: true,
-        reviewStar: true,
-        timestamp: true,
-      },
+    // 2️⃣ Fetch usage stats (including customer reviews)
+    const stats = await prisma.AgentUsageStatistics.findUnique({
+      where: { agentId },
+      select: { customerReviews: true },
     });
+
+    if (!stats) {
+      return { error: `No usage statistics found for agent: ${agentId}` };
+    }
+
+    // 3️⃣ Filter, sort, paginate reviews manually
+    const allReviews = stats.customerReviews || [];
+
+    const reviews = allReviews
+      .filter(r => new Date(r.timestamp) < new Date(startTimestamp))
+      .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+      .slice(0, 10);
 
     return {
       username,
@@ -87,5 +87,6 @@ async function getAgentCustomerReviews(username, agentId, startTimestamp) {
     throw err;
   }
 }
+
 
 module.exports = getAgentCustomerReviews;
