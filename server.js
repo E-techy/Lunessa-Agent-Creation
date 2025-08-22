@@ -76,10 +76,10 @@ app.post("/delete_agent", authenticateUser, async (req, res)=>{
 })
 
 
-app.post("/performance_metrics/:metricType?", authenticateUser, async (req, res) => {
+app.post("/performance_metrics/:metricType", authenticateUser, async (req, res) => {
   try {
     const { username, agentId } = req.body;
-    const { metricType } = req.params;
+    const { metricType } = req.params || undefined;
     const { timestamp } = req.query; // 👈 timestamp for reviews
 
     let result;
