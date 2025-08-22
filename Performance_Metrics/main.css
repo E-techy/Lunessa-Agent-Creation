@@ -1,0 +1,11 @@
+/* Main CSS file - imports all component stylesheets */
+@import url('./css/variables.css');
+@import url('./css/base.css');
+@import url('./css/agent-profile.css');
+@import url('./css/metrics.css');
+@import url('./css/services.css');
+@import url('./css/charts.css');
+@import url('./css/reviews.css');
+@import url('./css/heatmap.css');
+@import url('./css/history.css');
+@import url('./css/responsive.css');

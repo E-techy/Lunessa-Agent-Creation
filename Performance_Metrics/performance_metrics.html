@@ -1,88 +1,250 @@
-<!DOCTYPE html>
+2<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Performance Metrics</title>
-  <link rel="stylesheet" href="performance_metrics.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Performance Dashboard</title>
+    <!-- Load Chart.js first -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <!-- Load zoom plugin - this might not work but charts will still display -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/2.0.1/chartjs-plugin-zoom.min.js"></script>
+    <!-- Load Hammer.js for touch gestures -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <link rel="stylesheet" href="main.css">
 
+    <script src="./utils/agent-data.js"></script>
+    <script src="./utils/chart-controls.js"></script>
+    <script src="./utils/chart-creation.js"></script>
+    <script src="./utils/dashboard-init.js"></script>
+    <script src="./utils/data-filtering.js"></script>
+    <script src="./utils/data-population.js"></script>
+    <script src="./utils/global-state.js"></script>
+    <script src="./utils/heatmap-filtering.js"></script>
+    <script src="./utils/heatmap-functions.js"></script>
+    <script src="./utils/heatmap-generation.js"></script>
+    <script src="./utils/time-period-filtering.js"></script>
+    <script src="./utils/time-utilities.js"></script>
 </head>
 <body>
-    <div id="agentMetrics" class="metrics-container">
-    <!-- JS will populate content -->
-  </div>
- 
-  <!-- <div class="container">
-    
-    <header>
-      <h1>Performance Metrics</h1>
-    </header>
+    <div class="container">
+        <div class="header">
+            <h1>Agent Performance Dashboard</h1>
+            <p>Comprehensive analytics and performance monitoring for customer support agent</p>
+        </div>
 
- 
-    <section class="metrics-card">
-      <h2>Total Agents</h2>
-      <p id="totalAgents">0</p>
-    </section>
+        <!-- Agent Basic Info -->
+        <div class="agent-info-section">
+            <div class="agent-profile-card">
+                <div class="agent-avatar">
+                    <div class="avatar-circle">
+                        <span id="agentInitials">MK</span>
+                    </div>
+                </div>
+                <div class="agent-details">
+                    <h2 id="agentName">Meenkshi</h2>
+                    <p id="agentId">AGT-324d270d4718aa14</p>
+                    <div class="company-info">
+                        <h3 id="companyName">Aman</h3>
+                        <p id="companyOwner">Owner: Rahul Rastogi</p>
+                        <p id="companyEmail">meenu@gmail.com</p>
+                        <p id="companyPhone">📞 9183421044</p>
+                        <p id="establishmentDate">Established: Aug 8, 2025</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-  
-    <section class="agents-section">
-      <h2>Agent Records</h2>
-      <ul id="agentsList"></ul>
-    </section>
+        <!-- Main Metrics Grid -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value" id="totalRequests">5</div>
+                <div class="metric-label">Total Requests Handled</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="totalTokens">430</div>
+                <div class="metric-label">Total Tokens Used</div>
+            </div>
+            <div class="metric-card" style="border: 2px solid var(--success); background: rgba(34, 197, 94, 0.1);">
+                <div class="metric-value" style="color: var(--success); font-size: 3rem;" id="satisfactionRate">4.3</div>
+                <div class="metric-label" style="color: var(--success); font-weight: 600;">Satisfaction Rate</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="availableTokens">500</div>
+                <div class="metric-label">Available Tokens</div>
+            </div>
+        </div>
 
+        <!-- Services Section -->
+        <div class="services-section">
+            <h2>Available Services</h2>
+            <div class="services-grid" id="servicesGrid">
+                <!-- Services will be populated by JavaScript -->
+            </div>
+        </div>
 
-    <section id="agentDetails" class="agent-details hidden">
-      <h2>Agent Details</h2>
-      <div id="agentDetailsContent"></div>
-    </section>
-  </div>
-  -->
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <!-- Request Timeline Chart -->
+            <div class="chart-container-wrapper">
+                <div class="chart-header">
+                    <h2 class="chart-title">Request Handling Timeline (Hourly Distribution)</h2>
+                    <div class="chart-controls">
+                        <div class="time-period-buttons">
+                            <button class="time-period-btn active" data-period="days" data-chart="requestChart">Days</button>
+                            <button class="time-period-btn" data-period="weeks" data-chart="requestChart">Weeks</button>
+                            <button class="time-period-btn" data-period="months" data-chart="requestChart">Months</button>
+                            <button class="time-period-btn" data-period="years" data-chart="requestChart">Years</button>
+                            <button class="time-period-btn" data-period="lifetime" data-chart="requestChart">Lifetime</button>
+                        </div>
+                        <button class="control-btn" onclick="resetZoom('requestChart')">Reset Zoom</button>
+                        <button class="control-btn secondary" onclick="exportChart('requestChart')">Export</button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="zoom-info">Interactive Timeline - Scroll to zoom, drag to pan</div>
+                    <canvas id="requestChart"></canvas>
+                </div>
+            </div>
 
- 
-<!-- <script src="./utils/renderPerformanceMetrics.js"></script>
+            <!-- Token Usage Chart -->
+            <div class="chart-container-wrapper">
+                <div class="chart-header">
+                    <h2 class="chart-title">Cumulative Token Usage</h2>
+                    <div class="chart-controls">
+                        <div class="time-period-buttons">
+                            <button class="time-period-btn active" data-period="days" data-chart="tokenChart">Days</button>
+                            <button class="time-period-btn" data-period="weeks" data-chart="tokenChart">Weeks</button>
+                            <button class="time-period-btn" data-period="months" data-chart="tokenChart">Months</button>
+                            <button class="time-period-btn" data-period="years" data-chart="tokenChart">Years</button>
+                            <button class="time-period-btn" data-period="lifetime" data-chart="tokenChart">Lifetime</button>
+                        </div>
+                        <button class="control-btn" onclick="resetZoom('tokenChart')">Reset Zoom</button>
+                        <button class="control-btn secondary" onclick="exportChart('tokenChart')">Export</button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="zoom-info">Cumulative Usage - Interactive</div>
+                    <canvas id="tokenChart"></canvas>
+                </div>
+            </div>
 
-<script>
-  // 🔹 Minimal records for UI
-  const agentRecords = [
-    { id: "AG101", name: "John Doe" },
-    { id: "AG102", name: "Jane Smith" }
-  ];
+            <!-- Dual Charts Grid -->
+            <div class="dual-chart-grid">
+                <!-- Satisfaction Rate Chart -->
+                <div class="chart-container-wrapper">
+                    <div class="chart-header">
+                        <h2 class="chart-title">Customer Satisfaction Trend</h2>
+                        <div class="chart-controls">
+                            <div class="time-period-buttons">
+                                <button class="time-period-btn active" data-period="days" data-chart="satisfactionChart">Days</button>
+                                <button class="time-period-btn" data-period="weeks" data-chart="satisfactionChart">Weeks</button>
+                                <button class="time-period-btn" data-period="months" data-chart="satisfactionChart">Months</button>
+                                <button class="time-period-btn" data-period="years" data-chart="satisfactionChart">Years</button>
+                                <button class="time-period-btn" data-period="lifetime" data-chart="satisfactionChart">Lifetime</button>
+                            </div>
+                            <button class="control-btn" onclick="resetZoom('satisfactionChart')">Reset</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="satisfactionChart"></canvas>
+                    </div>
+                </div>
 
-  // 🔹 Full dataset with details
-  const agentDetailsData = [
-    {
-      id: "AG101",
-      name: "John Doe",
-      agentBasicDetails: { department: "Support", level: "Senior" },
-      customerReviews: ["Great service!", "Quick response."],
-      modificationHistory: ["Updated profile", "Changed department"],
-      requestHandledLogs: ["Request #001", "Request #002"],
-      satisfactionRate: 92,
-      satisfactionRateLogs: ["90%", "92%"],
-      totalRequestsHandled: 120,
-      usageLogs: ["Login at 9AM", "Handled request at 10AM"]
-    },
-    {
-      id: "AG102",
-      name: "Jane Smith",
-      agentBasicDetails: { department: "Sales", level: "Junior" },
-      customerReviews: [],
-      modificationHistory: [],
-      requestHandledLogs: [],
-      satisfactionRate: 80,
-      satisfactionRateLogs: [],
-      totalRequestsHandled: 45,
-      usageLogs: []
-    }
-  ];
+                <!-- Rating Distribution -->
+                <div class="chart-container-wrapper">
+                    <div class="chart-header">
+                        <h2 class="chart-title">Rating Distribution</h2>
+                        <div class="chart-controls">
+                            <div class="time-period-buttons">
+                                <button class="time-period-btn active" data-period="days" data-chart="ratingChart">Days</button>
+                                <button class="time-period-btn" data-period="weeks" data-chart="ratingChart">Weeks</button>
+                                <button class="time-period-btn" data-period="months" data-chart="ratingChart">Months</button>
+                                <button class="time-period-btn" data-period="years" data-chart="ratingChart">Years</button>
+                                <button class="time-period-btn" data-period="lifetime" data-chart="ratingChart">Lifetime</button>
+                            </div>
+                            <button class="control-btn" onclick="resetZoom('ratingChart')">Reset</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="ratingChart"></canvas>
+                    </div>
+                </div>
+            </div>
 
-  // 🔹 Render list using only id + name
-  renderPerformanceMetrics(agentRecords, agentDetailsData);
-</script> -->
+            <!-- Token Usage by Request Chart -->
+            <div class="chart-container-wrapper">
+                <div class="chart-header">
+                    <h2 class="chart-title">Token Usage per Request</h2>
+                    <div class="chart-controls">
+                        <div class="time-period-buttons">
+                            <button class="time-period-btn active" data-period="days" data-chart="tokenPerRequestChart">Days</button>
+                            <button class="time-period-btn" data-period="weeks" data-chart="tokenPerRequestChart">Weeks</button>
+                            <button class="time-period-btn" data-period="months" data-chart="tokenPerRequestChart">Months</button>
+                            <button class="time-period-btn" data-period="years" data-chart="tokenPerRequestChart">Years</button>
+                            <button class="time-period-btn" data-period="lifetime" data-chart="tokenPerRequestChart">Lifetime</button>
+                        </div>
+                        <button class="control-btn" onclick="resetZoom('tokenPerRequestChart')">Reset</button>
+                        <button class="control-btn secondary" onclick="exportChart('tokenPerRequestChart')">Export</button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="tokenPerRequestChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Activity Heatmap -->
+        <div class="charts-section">
+            <div class="chart-container-wrapper">
+                <div class="chart-header">
+                    <h2 class="chart-title" id="heatmapTitle">Activity Heatmap - Recent 24 Hours</h2>
+                    <div class="chart-controls">
+                        <div class="time-period-buttons">
+                            <button class="time-period-btn active" data-period="days" data-chart="activityHeatmap">Days</button>
+                            <button class="time-period-btn" data-period="weeks" data-chart="activityHeatmap">Weeks</button>
+                            <button class="time-period-btn" data-period="months" data-chart="activityHeatmap">Months</button>
+                            <button class="time-period-btn" data-period="years" data-chart="activityHeatmap">Years</button>
+                            <button class="time-period-btn" data-period="lifetime" data-chart="activityHeatmap">Lifetime</button>
+                        </div>
+                        <button class="control-btn" onclick="resetHeatmap()">Reset View</button>
+                    </div>
+                </div>
+                <div class="heatmap-container">
+                    <div class="heatmap-grid" id="activityHeatmap"></div>
+                    <div class="heatmap-legend">
+                        <span>Less Active</span>
+                        <div class="legend-bar">
+                            <div class="legend-step" data-level="0"></div>
+                            <div class="legend-step" data-level="1"></div>
+                            <div class="legend-step" data-level="2"></div>
+                            <div class="legend-step" data-level="3"></div>
+                            <div class="legend-step" data-level="4"></div>
+                        </div>
+                        <span>More Active</span>
+                    </div>
+                    <div class="heatmap-info" id="heatmapInfo">Showing hourly activity distribution</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Reviews Section -->
+        <div class="reviews-section">
+            <h2>Customer Reviews</h2>
+            <div class="reviews-grid" id="reviewsGrid">
+                <!-- Reviews will be populated by JavaScript -->
+            </div>
+        </div>
 
+        <!-- Modification History Section -->
+        <div class="history-section">
+            <h2>Modification History</h2>
+            <div class="history-timeline" id="historyTimeline">
+                <!-- History will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
 
+    <!-- Load your JavaScript file last -->
+    <script src="p.js"></script>
 </body>
-
- <script src="./utils/renderAgentMetrics.js"></script>
 </html>
