@@ -21,7 +21,17 @@ app.use(cookieParser());
 const PORT = process.env.AGENT_CREATION_PORT || 3002 ;
 const secret = process.env.AGENT_ID_CREATION_SECRET || "your-secret-for-creating-agent-id";
 
+
+// Setting static folder structure for sending static files in the ui 
+
+
+app.use(express.static(__dirname+ "/Performance_Metrics"));
 app.use(express.static(__dirname+"/Agent_Details_Creation_UI"));
+app.use("/css_metrics", express.static(__dirname + "/Performance_Metrics/css_metrics"));
+app.use("/utils_metrics", express.static(__dirname + "/Performance_Metrics/utils_metrics"));
+
+
+
 
 // Middleware to parse JSON
 app.use(express.json());
@@ -75,6 +85,16 @@ app.post("/delete_agent", authenticateUser, async (req, res)=>{
 
 })
 
+
+// Sending the performance metrics page Performance_Metrics/performance_metrics.html
+
+app.get("/performance_metrics", (req, res) =>{
+  
+  // Send the html file for the performance metrics
+  res.sendFile(__dirname+"/Performance_Metrics/performance_metrics.html");
+} )
+
+// handle data sending for the performance metrics page
 
 app.post("/performance_metrics/:metricType", authenticateUser, async (req, res) => {
   try {
