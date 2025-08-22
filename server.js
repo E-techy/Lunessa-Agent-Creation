@@ -4,6 +4,12 @@ const authenticateUser = require("./utils/authenticate_user");
 const cookieParser = require("cookie-parser");
 const fetchAllAssociatedAgents = require('./utils/fetch_all_associated_agents');
 const deleteAgent = require("./utils/delete_agent");
+const getModificationHistory = require("./utils/performance_metrics_utility/get_modification_history");
+const getAgentRecord = require("./utils/performance_metrics_utility/get_agent_record");
+const getAgentCustomerReviews = require("./utils/performance_metrics_utility/get_agent_customer_reviews");
+const getAgentUsageStats = require("./utils/performance_metrics_utility/get_agent_usage_stats");
+const getAgentRequestsHandled = require("./utils/performance_metrics_utility/get_agent_requests_handled");
+const createPerformanceMetrics = require("./utils/performance_metrics_utility/create_performance_metrics");
 
 
 
@@ -60,7 +66,6 @@ app.post("/modify_agent_details", authenticateUser, async (req, res)=>{
 app.post("/delete_agent", authenticateUser, async (req, res)=>{
   // delete agent using agent id and username
   const agentId = req.query.agentId;
-  console.log(agentId);
   const username = req.body.username;
   
   
@@ -70,6 +75,65 @@ app.post("/delete_agent", authenticateUser, async (req, res)=>{
 
 })
 
+
+app.post("/performance_metrics/:metricType?", authenticateUser, async (req, res) => {
+  try {
+    const { username, agentId } = req.body;
+    const { metricType } = req.params;
+    const { timestamp } = req.query; // 👈 timestamp for reviews
+
+    let result;
+
+    switch (metricType) {
+      case "modification_history":
+        if (!agentId) {
+          return res.status(400).json({ error: "agentId is required for modification_history" });
+        }
+        result = await getModificationHistory(username, agentId);
+        break;
+
+      case "agent_record":
+        result = await getAgentRecord(username);
+        break;
+
+      case "customer_reviews":
+        if (!agentId) {
+          return res.status(400).json({ error: "agentId is required for customer_reviews" });
+        }
+        // if no timestamp given, use current time (fetch latest 10)
+        const startTime = timestamp || new Date().toISOString();
+        result = await getAgentCustomerReviews(username, agentId, startTime);
+        break;
+
+      case "usage_stats":
+        if (!agentId) {
+          return res.status(400).json({ error: "agentId is required for usage_stats" });
+        }
+        result = await getAgentUsageStats(username, agentId);
+        break;
+
+      case "requests_handled":
+        if (!agentId) {
+          return res.status(400).json({ error: "agentId is required for requests_handled" });
+        }
+        result = await getAgentRequestsHandled(username, agentId);
+        break;
+
+      case undefined: // when user hits just /performance_metrics
+        result = await createPerformanceMetrics(username);
+        break;
+
+      default:
+        return res.status(400).json({ error: `Unknown metric type: ${metricType}` });
+    }
+
+    res.json(result);
+
+  } catch (err) {
+    console.error("Error in /performance_metrics route:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 
 // Start server

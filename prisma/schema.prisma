@@ -81,9 +81,9 @@ type RequestHandledLog {
   timestamp DateTime @default(now())
 }
 
-// 3️⃣ New Model: Company Agents Registered
 model CompanyAgentsRegistered {
   id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  username    String        @unique   // ✅ Now unique
   totalAgents Int           @default(0)
   agents      AgentRecord[]
 }

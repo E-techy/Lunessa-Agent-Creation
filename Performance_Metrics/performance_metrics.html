@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Performance Metrics</title>
+  <link rel="stylesheet" href="performance_metrics.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+    <div id="agentMetrics" class="metrics-container">
+    <!-- JS will populate content -->
+  </div>
+ 
+  <!-- <div class="container">
+    
+    <header>
+      <h1>Performance Metrics</h1>
+    </header>
+
+ 
+    <section class="metrics-card">
+      <h2>Total Agents</h2>
+      <p id="totalAgents">0</p>
+    </section>
+
+  
+    <section class="agents-section">
+      <h2>Agent Records</h2>
+      <ul id="agentsList"></ul>
+    </section>
+
+
+    <section id="agentDetails" class="agent-details hidden">
+      <h2>Agent Details</h2>
+      <div id="agentDetailsContent"></div>
+    </section>
+  </div>
+  -->
+
+ 
+<!-- <script src="./utils/renderPerformanceMetrics.js"></script>
+
+<script>
+  // 🔹 Minimal records for UI
+  const agentRecords = [
+    { id: "AG101", name: "John Doe" },
+    { id: "AG102", name: "Jane Smith" }
+  ];
+
+  // 🔹 Full dataset with details
+  const agentDetailsData = [
+    {
+      id: "AG101",
+      name: "John Doe",
+      agentBasicDetails: { department: "Support", level: "Senior" },
+      customerReviews: ["Great service!", "Quick response."],
+      modificationHistory: ["Updated profile", "Changed department"],
+      requestHandledLogs: ["Request #001", "Request #002"],
+      satisfactionRate: 92,
+      satisfactionRateLogs: ["90%", "92%"],
+      totalRequestsHandled: 120,
+      usageLogs: ["Login at 9AM", "Handled request at 10AM"]
+    },
+    {
+      id: "AG102",
+      name: "Jane Smith",
+      agentBasicDetails: { department: "Sales", level: "Junior" },
+      customerReviews: [],
+      modificationHistory: [],
+      requestHandledLogs: [],
+      satisfactionRate: 80,
+      satisfactionRateLogs: [],
+      totalRequestsHandled: 45,
+      usageLogs: []
+    }
+  ];
+
+  // 🔹 Render list using only id + name
+  renderPerformanceMetrics(agentRecords, agentDetailsData);
+</script> -->
+
+
+</body>
+
+ <script src="./utils/renderAgentMetrics.js"></script>
+</html>
