@@ -148,7 +148,7 @@ app.post("/performance_metrics/:metricType", authenticateUser, async (req, res) 
         result = await getAgentSatisfactionStats(username, agentId, timeframe);
         break;
 
-      case undefined: // when user hits just /performance_metrics
+      case "all": // when user hits just /performance_metrics
         result = await createPerformanceMetrics(username);
         break;
 

@@ -127,5 +127,5 @@ const payload = {
   address: "Ranchi, Jharkhand",
 };
 
-const token = jwt.sign(payload, JWT_SECRET_KEY, { expiresIn: "1d" });
+const token = jwt.sign(payload, JWT_SECRET_KEY, { expiresIn: "10d" });
 console.log(token);
