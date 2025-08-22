@@ -10,6 +10,7 @@ const getAgentCustomerReviews = require("./utils/performance_metrics_utility/get
 const getAgentUsageStats = require("./utils/performance_metrics_utility/get_agent_usage_stats");
 const getAgentRequestsHandled = require("./utils/performance_metrics_utility/get_agent_requests_handled");
 const createPerformanceMetrics = require("./utils/performance_metrics_utility/create_performance_metrics");
+const getAgentSatisfactionStats = require("./utils/performance_metrics_utility/get_agent_satisfaction");
 
 
 
@@ -101,7 +102,7 @@ app.post("/performance_metrics/:metricType", authenticateUser, async (req, res) 
     const { username, agentId } = req.body;
     const { metricType } = req.params || undefined;
     const { timestamp } = req.query; // 👈 timestamp for reviews
-    const { timeframe } = req.query || "lifetime";
+    const { timeframe } = req.query; 
 
     let result;
 
@@ -137,7 +138,14 @@ app.post("/performance_metrics/:metricType", authenticateUser, async (req, res) 
         if (!agentId) {
           return res.status(400).json({ error: "agentId is required for requests_handled" });
         }
-        result = await getAgentRequestsHandled(username, agentId);
+        result = await getAgentRequestsHandled(username, agentId, timeframe);
+        break;
+
+      case "satisfaction_rate_logs":
+        if (!agentId) {
+          return res.status(400).json({ error: "agentId is required for satisfaction_rate_logs" });
+        }
+        result = await getAgentSatisfactionStats(username, agentId, timeframe);
         break;
 
       case undefined: // when user hits just /performance_metrics
