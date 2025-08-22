@@ -66,3 +66,10 @@
 .solution-input {
   margin-bottom: 0;
 }
+.no-agents-message{
+  display: flex;
+  justify-content: center;
+  padding: 100px;
+  font-size: 25px;
+  font-weight: 600;
+}

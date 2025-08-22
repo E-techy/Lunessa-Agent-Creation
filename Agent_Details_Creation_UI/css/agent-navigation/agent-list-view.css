@@ -1,0 +1,36 @@
+/* Agent List View */
+.agent-list-view {
+    background: var(--card-bg);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
+    overflow: hidden;
+}
+
+.agent-list-header {
+    padding: 1.5rem 2rem;
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--secondary-light) 100%);
+    border-bottom: 1px solid var(--border);
+}
+
+.list-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list-title h2 {
+    margin: 0;
+    color: var(--text);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.agent-count {
+    background: var(--accent-100);
+    color: var(--accent-dark);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}

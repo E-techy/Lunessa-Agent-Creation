@@ -1,0 +1,72 @@
+/* Agent Info Styles */
+.agent-name-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    transition: var(--transition);
+}
+
+.agent-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.agent-name {
+    font-weight: 600;
+    color: var(--text);
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.agent-name-btn:hover .agent-name {
+    color: var(--accent);
+}
+
+.agent-id {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    font-weight: 500;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    background: var(--primary-50);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    width: fit-content;
+}
+
+.agent-url {
+    color: var(--accent);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    word-break: break-all;
+    transition: var(--transition);
+}
+
+.agent-url:hover {
+    color: var(--accent-dark);
+    text-decoration: underline;
+}
+
+.external-link {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    opacity: 0.7;
+    transition: var(--transition);
+}
+
+.agent-url:hover .external-link {
+    opacity: 1;
+    transform: translate(2px, -2px);
+}
+
+.company-name {
+    color: var(--text);
+    font-weight: 500;
+}

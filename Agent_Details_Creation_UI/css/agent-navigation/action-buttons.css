@@ -1,0 +1,45 @@
+/* Action Buttons */
+.agent-actions-cell {
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    background: var(--secondary);
+    color: var(--text-light);
+}
+
+.action-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.edit-btn:hover {
+    background: var(--accent-100);
+    color: var(--accent-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.delete-btn:hover {
+    background: var(--error-100);
+    color: var(--error-600);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Action Buttons Responsive Design */
+@media (max-width: 768px) {
+    .agent-actions-cell {
+        justify-content: flex-start;
+    }
+}

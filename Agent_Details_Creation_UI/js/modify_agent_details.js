@@ -3,6 +3,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   modifyBtns.forEach(btn => {
     btn.addEventListener("click", async () => {
+      // Prevent save during item removal
+      if (window.isRemovingItem) {
+        console.log('Save blocked: Item removal in progress');
+        return;
+      }
       // Collect main form values
       const agentId = document.getElementById("agentId").value.trim();
       const agentName = document.getElementById("agentName").value.trim();

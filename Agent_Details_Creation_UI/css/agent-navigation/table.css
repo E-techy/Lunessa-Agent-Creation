@@ -1,0 +1,67 @@
+/* Table Styles */
+.agent-list-table {
+    width: 100%;
+}
+
+.table-header {
+    display: grid;
+    grid-template-columns: 2fr 2.5fr 1.5fr 120px;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+}
+
+.header-cell {
+    font-weight: 600;
+    color: var(--text-light);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 2fr 2.5fr 1.5fr 120px;
+    gap: 1rem;
+    padding: 1.25rem 2rem;
+    border-bottom: 1px solid var(--border-light);
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.table-row:hover {
+    background: linear-gradient(90deg, var(--accent-50) 0%, var(--bg-accent) 100%);
+    border-left: 4px solid var(--accent);
+}
+
+.table-row:last-child {
+    border-bottom: none;
+}
+
+.table-cell {
+    display: flex;
+    align-items: center;
+}
+
+/* Table Responsive Design */
+@media (max-width: 768px) {
+    .table-header,
+    .table-row {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    
+    .header-cell {
+        display: none;
+    }
+    
+    .table-cell {
+        border-bottom: 1px solid var(--border-light);
+        padding: 0.5rem 0;
+    }
+    
+    .table-cell:last-child {
+        border-bottom: none;
+    }
+}

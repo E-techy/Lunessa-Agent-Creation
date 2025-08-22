@@ -29,10 +29,8 @@ class DynamicContentManager {
                 });
             }
             
-            // Add event listener to new input
-            stepGroup.querySelector('input').addEventListener('input', () => this.progressTracker.updateProgress());
-            
-            this.progressTracker.updateProgress();
+            // Progress tracking will be handled automatically by the mutation observer
+            this.progressTracker.triggerUpdate();
         });
 
         // Add issue & solution functionality
@@ -51,12 +49,8 @@ class DynamicContentManager {
                 });
             }
             
-            // Add event listeners to new inputs
-            issueGroup.querySelectorAll('input').forEach(input => {
-                input.addEventListener('input', () => this.progressTracker.updateProgress());
-            });
-            
-            this.progressTracker.updateProgress();
+            // Progress tracking will be handled automatically by the mutation observer
+            this.progressTracker.triggerUpdate();
         });
 
         // Remove step functionality
@@ -80,7 +74,7 @@ class DynamicContentManager {
                     });
                     stepCount = steps.length;
                     
-                    this.progressTracker.updateProgress();
+                    this.progressTracker.triggerUpdate();
                 });
             }
         });
@@ -110,7 +104,7 @@ class DynamicContentManager {
                     });
                     issueCount = issueInputs.length;
                     
-                    this.progressTracker.updateProgress();
+                    this.progressTracker.triggerUpdate();
                 });
             }
         });
