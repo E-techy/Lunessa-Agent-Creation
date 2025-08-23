@@ -1,0 +1,106 @@
+/* Footer Styles */
+        .footer {
+            background: rgba(255, 255, 255, 0.95);
+            border-top: 1px solid rgba(139, 92, 246, 0.2);
+            margin-top: 4rem;
+            padding: 3rem 0 1rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .footer-section h4 {
+            color: #18181B;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #8B5CF6;
+            margin-bottom: 1rem;
+        }
+
+        .footer-description {
+            color: #71717A;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #71717A;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #8B5CF6;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 2rem 1rem 2rem;
+            border-top: 1px solid rgba(139, 92, 246, 0.1);
+            margin-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-bottom p {
+            color: #71717A;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .footer-social {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .footer-social span {
+            color: #71717A;
+            font-size: 0.9rem;
+        }
+
+        .social-link {
+            color: #71717A;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .social-link:hover {
+            color: #8B5CF6;
+            background: rgba(139, 92, 246, 0.1);
+            transform: translateY(-1px);
+        }

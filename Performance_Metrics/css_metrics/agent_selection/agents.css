@@ -1,0 +1,107 @@
+.agent-section {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 1rem;
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.section-header {
+    background: rgba(139, 92, 246, 0.1);
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #18181B;
+}
+
+.agent-count {
+    background: #8B5CF6;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.agents-list {
+    padding: 0;
+}
+
+.agents-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-header {
+    background: rgba(139, 92, 246, 0.1);
+    border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.table-header th {
+    padding: 1rem 2rem;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #18181B;
+    border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.agent-row {
+    border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+    transition: all 0.3s ease;
+    text-align: center;
+    cursor: pointer;
+}
+
+.agent-row:hover {
+    background: rgba(139, 92, 246, 0.1);
+}
+
+.agent-row td {
+    padding: 1.5rem 2rem;
+    font-size: 1rem;
+}
+
+.agent-name {
+    color: #18181B;
+    font-weight: 500;
+}
+
+.agent-id-btn {
+    background: #8B5CF6;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    font-family: 'Monaco', monospace;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.agent-id-btn:hover {
+    background: #7C3AED;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.no-agents {
+    text-align: center;
+    padding: 3rem;
+    color: #71717A;
+}
+
+.agent-row.selected {
+    background: rgba(139, 92, 246, 0.15) !important;
+}
+
+.agent-row.selected .agent-name {
+    color: #8B5CF6 !important;
+}

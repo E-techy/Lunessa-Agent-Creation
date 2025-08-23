@@ -3,9 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Agent Portal - Agent Selection</title>
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/agent_selection_main.css">
+    <script src="/utils_metrics/performance_metrics_agent_selection.js"></script>
 </head>
 <body>
-    Agent Selection Page
+    <header class="header">
+        <div class="logo">
+            <div style="width: 32px; height: 32px; background: #8B5CF6; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);">A</div>
+            AgentPortal
+        </div>
+    </header>
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="hero-background"></div>
+        
+        
+        <div class="hero-content">
+            <div class="hero-container">
+                <div class="hero-left">
+                    <h1 class="hero-title">
+                        Agent Performance Dashboard
+                    </h1>
+                    <p class="hero-description">
+                        Monitor and manage your AI agents with comprehensive analytics and real-time performance metrics. Select from your registered agents to view detailed insights and control their operations.
+                    </p> 
+                </div>
+                <div class="hero-right">
+                    <div class="dashboard-mockup">
+                        <div class="mockup-header">
+                            <div class="mockup-nav">
+                                <span class="nav-item active">LAST 7 DAYS</span>
+                                <span class="nav-item">USING</span>
+                                <span class="nav-item">MEDIAN</span>
+                                <div class="nav-controls">
+                                    <button class="control-btn">●●●</button>
+                                    <button class="control-btn">▢</button>
+                                    <button class="control-btn">✕</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mockup-content">
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-value">67%</div>
+                                    <div class="stat-change">+2.7%</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value">2.7M/ps</div>
+                                    <div class="stat-change">+12.3%</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value">40.6%</div>
+                                    <div class="stat-change">-2.1%</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value">475K</div>
+                                    <div class="stat-change">+5.4%</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value">17min</div>
+                                    <div class="stat-change">-1.8%</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value">29%</div>
+                                    <div class="stat-change">+3.2%</div>
+                                </div>
+                            </div>
+                            <div class="chart-area">
+                                <div class="chart-bars">
+                                    <div class="bar" style="height: 60%; background: linear-gradient(180deg, #3B82F6, #1E40AF);"></div>
+                                    <div class="bar" style="height: 80%; background: linear-gradient(180deg, #3B82F6, #1E40AF);"></div>
+                                    <div class="bar" style="height: 45%; background: linear-gradient(180deg, #3B82F6, #1E40AF);"></div>
+                                    <div class="bar" style="height: 90%; background: linear-gradient(180deg, #3B82F6, #1E40AF);"></div>
+                                    <div class="bar" style="height: 70%; background: linear-gradient(180deg, #3B82F6, #1E40AF);"></div>
+                                    <div class="bar" style="height: 55%; background: linear-gradient(180deg, #3B82F6, #1E40AF);"></div>
+                                    <div class="bar" style="height: 85%; background: linear-gradient(180deg, #3B82F6, #1E40AF);"></div>
+                                    <div class="bar" style="height: 65%; background: linear-gradient(180deg, #3B82F6, #1E40AF);"></div>
+                                    <div class="bar" style="height: 75%; background: linear-gradient(180deg, #3B82F6, #1E40AF);"></div>
+                                    <div class="bar" style="height: 50%; background: linear-gradient(180deg, #3B82F6, #1E40AF);"></div>
+                                    <div class="bar" style="height: 95%; background: linear-gradient(180deg, #10B981, #059669);"></div>
+                                    <div class="bar" style="height: 40%; background: linear-gradient(180deg, #10B981, #059669);"></div>
+                                    <div class="bar" style="height: 80%; background: linear-gradient(180deg, #10B981, #059669);"></div>
+                                    <div class="bar" style="height: 60%; background: linear-gradient(180deg, #10B981, #059669);"></div>
+                                    <div class="bar" style="height: 70%; background: linear-gradient(180deg, #10B981, #059669);"></div>
+                                </div>
+                                <div class="chart-lines">
+                                    <svg class="line-chart" viewBox="0 0 300 100">
+                                        <path d="M10,80 Q50,60 100,70 T200,40 T290,30" stroke="#10B981" stroke-width="3" fill="none" opacity="0.8"/>
+                                        <path d="M10,90 Q50,70 100,75 T200,65 T290,55" stroke="#EF4444" stroke-width="3" fill="none" opacity="0.8"/>
+                                        <path d="M10,60 Q50,40 100,50 T200,25 T290,15" stroke="#8B5CF6" stroke-width="3" fill="none" opacity="0.8"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <main class="main-container">
+
+
+        <div class="user-info">
+            <span id="username-display">Username: loading...</span>
+            <span id="total-agents-display">total agents: loading...</span>
+        </div>
+        
+        <section class="agent-section">
+            <div class="section-header">
+                <h2 class="section-title">Your Agents</h2>
+                <div class="agent-count" id="agent-count-display">0 agents</div>
+            </div>
+            
+            <div class="agents-list">
+                <table class="agents-table">
+                    <thead class="table-header">
+                        <tr>
+                            <th>Agent Name</th>
+                            <th>Agent ID</th>
+                        </tr>
+                    </thead>
+                    <tbody id="agents-tbody">
+                        <!-- Agent rows will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <div style="width: 24px; height: 24px; background: #8B5CF6; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 0.8rem;">A</div>
+                    <span>AgentPortal</span>
+                </div>
+                <p class="footer-description">Empowering businesses with intelligent AI agent management and analytics.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Platform</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="#">Analytics</a></li>
+                    <li><a href="#">Agent Management</a></li>
+                    <li><a href="#">API Documentation</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Community</a></li>
+                    <li><a href="#">Status Page</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul class="footer-links">
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 AgentPortal. All rights reserved.</p>
+            <div class="footer-social">
+                <span>Follow us:</span>
+                <a href="#" class="social-link">LinkedIn</a>
+                <a href="#" class="social-link">Twitter</a>
+                <a href="#" class="social-link">GitHub</a>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
