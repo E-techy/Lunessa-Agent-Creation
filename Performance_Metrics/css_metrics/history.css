@@ -1,67 +1,114 @@
-/* History Section and Timeline */
+/* History Section - Modern Layout */
 .history-section {
     margin-bottom: 3rem;
+    padding: 0 1rem;
 }
 
 .history-section h2 {
-    font-size: 2rem;
-    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
     text-align: center;
     color: var(--accent);
+    background: linear-gradient(135deg, var(--accent), #7c3aed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
 }
 
 .history-timeline {
-    position: relative;
-    padding-left: 2rem;
-}
-
-.history-timeline::before {
-    content: '';
-    position: absolute;
-    left: 1rem;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: linear-gradient(180deg, var(--accent), transparent);
+    display: grid;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .history-item {
+    background: linear-gradient(135deg, rgba(244, 244, 245, 0.1), rgba(139, 92, 246, 0.05));
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    border-radius: 20px;
+    padding: 0;
+    backdrop-filter: blur(15px);
+    transition: all 0.3s ease;
+    overflow: hidden;
     position: relative;
-    margin-bottom: 2rem;
-    background: rgba(244, 244, 245, 0.05);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem;
-    backdrop-filter: blur(10px);
-    margin-left: 1rem;
 }
 
-.history-marker {
+.history-item::before {
+    content: '';
     position: absolute;
-    left: -1.5rem;
-    top: 1.5rem;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--accent);
-    border: 3px solid var(--primary);
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), #7c3aed, #6d28d9);
+}
+
+
+.history-marker {
+    display: none;
+}
+
+.history-content {
+    padding: 2rem;
 }
 
 .history-header {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(139, 92, 246, 0.1);
 }
 
 .history-header h4 {
     color: var(--accent);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.history-header h4::before {
+    content: '📝';
     font-size: 1.2rem;
 }
 
 .history-date {
     color: var(--text-light);
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    background: rgba(139, 92, 246, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    font-weight: 500;
+}
+
+.history-details {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.company-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.description-row {
+    grid-column: 1 / -1;
+    margin-bottom: 0 !important;
+}
+
+.description-row span {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-top: 0.5rem;
 }
 
 .history-details p {
@@ -72,6 +119,368 @@
 
 .history-details strong {
     color: var(--secondary);
+}
+
+/* New detailed history styles - Card Layout */
+.history-detail-row {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(139, 92, 246, 0.15);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 0.8rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.history-detail-row::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--accent), #7c3aed);
+}
+
+
+.history-detail-row:last-of-type {
+    margin-bottom: 1.5rem;
+}
+
+.history-detail-row strong {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.95rem;
+    display: block;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.history-detail-row span {
+    color: var(--text);
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1.4;
+    display: block;
+}
+
+/* Items section styles - Enhanced */
+.history-items-section {
+    margin-top: 2rem;
+    background: rgba(139, 92, 246, 0.05);
+    border: 2px solid rgba(139, 92, 246, 0.2);
+    border-radius: 16px;
+    padding: 1.5rem;
+    position: relative;
+}
+
+
+.items-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(139, 92, 246, 0.1));
+    border: 2px solid rgba(139, 92, 246, 0.2);
+    margin-bottom: 1rem;
+}
+
+.items-header strong {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.items-header strong::before {
+    content: '📋';
+    font-size: 1rem;
+}
+
+.expand-icon {
+    transition: transform 0.3s ease;
+    color: var(--accent);
+}
+
+.items-content {
+    padding: 0;
+    background: transparent;
+    border-radius: 12px;
+}
+
+.history-item-entry {
+    display: block;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(139, 92, 246, 0.03));
+    border-radius: 16px;
+    border: 2px solid rgba(139, 92, 246, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.history-item-entry::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 5px;
+    background: linear-gradient(180deg, var(--accent), #7c3aed, #6d28d9);
+}
+
+
+.history-item-entry:last-child {
+    margin-bottom: 0;
+}
+
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.item-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.item-name {
+    color: var(--text);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.item-code {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    background: rgba(139, 92, 246, 0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.item-expand-btn {
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 4px;
+    padding: 0.3rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item-expand-btn:hover {
+    background: rgba(139, 92, 246, 0.2);
+    transform: translateY(-1px);
+}
+
+.item-expand-icon {
+    transition: transform 0.3s ease;
+    color: var(--accent);
+}
+
+.item-details {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(244, 244, 245, 0.03);
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.item-detail-section {
+    margin-bottom: 1.5rem;
+}
+
+.item-detail-section:last-child {
+    margin-bottom: 0;
+}
+
+.item-detail-section h5 {
+    color: var(--accent);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+    padding-bottom: 0.3rem;
+}
+
+.item-detail-section p {
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+}
+
+.item-detail-section ol {
+    padding-left: 1.2rem;
+    margin: 0;
+}
+
+.item-detail-section li {
+    color: var(--text-light);
+    line-height: 1.5;
+    margin-bottom: 0.3rem;
+}
+
+.problems-solutions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.problem-solution-pair {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 6px;
+    padding: 0.8rem;
+    border-left: 3px solid rgba(139, 92, 246, 0.5);
+}
+
+.problem-solution-pair .problem {
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.problem-solution-pair .solution {
+    margin-bottom: 0;
+}
+
+.problem-solution-pair .problem strong,
+.problem-solution-pair .solution strong {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.problem-solution-pair .problem,
+.problem-solution-pair .solution {
+    color: var(--text-light);
+    line-height: 1.5;
+}
+
+.no-details {
+    color: var(--text-light);
+    font-style: italic;
+    text-align: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 6px;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.no-items {
+    color: var(--text-light);
+    font-style: italic;
+    text-align: center;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
+    border: 2px dashed rgba(139, 92, 246, 0.2);
+    font-size: 1.1rem;
+}
+
+.no-items::before {
+    content: '📋';
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+/* Enhanced item name styling */
+.item-name {
+    color: var(--text);
+    font-weight: 700;
+    font-size: 1.3rem;
+    background: linear-gradient(135deg, var(--accent), #7c3aed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.item-name::before {
+    content: '⚡';
+    background: none;
+    -webkit-text-fill-color: initial;
+    font-size: 1.1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .history-section {
+        padding: 0 0.5rem;
+    }
+    
+    .history-section h2 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .history-content {
+        padding: 1.5rem;
+    }
+    
+    .history-header {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        text-align: center;
+    }
+    
+    .history-header h4 {
+        font-size: 1.3rem;
+    }
+    
+    .company-info-grid {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
+    
+    .history-detail-row {
+        padding: 0.8rem 1rem;
+    }
+    
+    .history-detail-row strong {
+        font-size: 0.9rem;
+    }
+    
+    .history-detail-row span {
+        font-size: 1rem;
+    }
+    
+    .items-header {
+        padding: 0.8rem 1rem;
+    }
+    
+    .items-header strong {
+        font-size: 1.1rem;
+    }
+    
+    .history-item-entry {
+        padding: 1rem;
+    }
+    
+    .item-name {
+        font-size: 1.2rem;
+    }
+    
+    .item-code {
+        font-size: 0.85rem;
+        padding: 0.3rem 0.6rem;
+    }
 }
 
 /* Load More Button - shared with reviews section */

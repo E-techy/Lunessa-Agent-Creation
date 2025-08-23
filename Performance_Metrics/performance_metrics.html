@@ -35,20 +35,85 @@
         <!-- Agent Basic Info -->
         <div class="agent-info-section">
             <div class="agent-profile-card">
-                <div class="agent-avatar">
-                    <div class="avatar-circle">
-                        <span id="agentInitials">MK</span>
+                <!-- Profile Header -->
+                <div class="profile-header">
+                    <div class="agent-avatar">
+                        <div class="avatar-circle">
+                            <span id="agentInitials">MK</span>
+                        </div>
+                    </div>
+                    <div class="agent-basic-info">
+                        <h2 id="agentName">Meenkshi</h2>
+                        <div class="agent-id" id="agentId">AGT-324d270d4718aa14</div>
                     </div>
                 </div>
-                <div class="agent-details">
-                    <h2 id="agentName">Meenkshi</h2>
-                    <p id="agentId">AGT-324d270d4718aa14</p>
-                    <div class="company-info">
-                        <h3 id="companyName">Aman</h3>
-                        <p id="companyOwner">Owner: Rahul Rastogi</p>
-                        <p id="companyEmail">meenu@gmail.com</p>
-                        <p id="companyPhone">📞 9183421044</p>
-                        <p id="establishmentDate">Established: Aug 8, 2025</p>
+                
+                <!-- Professional Information Grid -->
+                <div class="professional-info">
+                    <!-- Agent Information -->
+                    <div class="info-section">
+                        <h3>Agent Information</h3>
+                        <div class="info-item">
+                            <div class="info-icon">👤</div>
+                            <div class="info-content">
+                                <div class="info-label">Agent Name</div>
+                                <div class="info-value" id="agentNameDisplay">Meenkshi</div>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">🆔</div>
+                            <div class="info-content">
+                                <div class="info-label">Agent ID</div>
+                                <div class="info-value" id="agentIdDisplay">AGT-324d270d4718aa14</div>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">📅</div>
+                            <div class="info-content">
+                                <div class="info-label">Established</div>
+                                <div class="info-value" id="establishmentDate">Aug 8, 2025</div>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">🛠️</div>
+                            <div class="info-content">
+                                <div class="info-label">Services Provided</div>
+                                <div class="info-value" id="servicesCount">Loading...</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Company Information -->
+                    <div class="info-section">
+                        <h3>Company Information</h3>
+                        <div class="info-item">
+                            <div class="info-icon">🏢</div>
+                            <div class="info-content">
+                                <div class="info-label">Company Name</div>
+                                <div class="info-value company-name" id="companyName">Aman</div>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">👔</div>
+                            <div class="info-content">
+                                <div class="info-label">Company Owner</div>
+                                <div class="info-value" id="companyOwnerName">Rahul Rastogi</div>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">📧</div>
+                            <div class="info-content">
+                                <div class="info-label">Company Email</div>
+                                <div class="info-value email" id="companyEmail">meenu@gmail.com</div>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">📞</div>
+                            <div class="info-content">
+                                <div class="info-label">Service Number</div>
+                                <div class="info-value phone" id="companyHumanServiceNumber">9183421044</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
