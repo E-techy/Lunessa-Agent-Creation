@@ -2,6 +2,12 @@
 
 // Performance_Metrics/utils_metrics/fetch_agent_data_for_initial_load.js
 
+// Loading agent id 
+const urlParams = new URLSearchParams(window.location.search);
+
+const agentId = urlParams.get("agentId");
+
+
 // ✅ Function to open IndexedDB
 function openAgentDB() {
   return new Promise((resolve, reject) => {

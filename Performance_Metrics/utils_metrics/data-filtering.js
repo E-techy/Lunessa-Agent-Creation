@@ -1,9 +1,13 @@
 function filterRequestData(period, now, agent) {
+    if (!agent || !agent.requestHandledLogs) {
+        console.warn("Agent or requestHandledLogs missing", agent);
+        return { filteredData: [], filteredLabels: [] };
+    }
+
     let requestLogs = agent.requestHandledLogs;
-    let filteredLogs = filterLogsByPeriod(requestLogs, period, now,agent);
+    let filteredLogs = filterLogsByPeriod(requestLogs, period, now, agent);
     
     if (period === 'days' || period === 'lifetime') {
-        // Hourly distribution
         const hourlyData = {};
         filteredLogs.forEach(log => {
             const hour = new Date(log.timestamp).getHours();
@@ -15,7 +19,6 @@ function filterRequestData(period, now, agent) {
         
         return { filteredData: data, filteredLabels: labels };
     } else {
-        // Group by time period
         const groupedData = groupDataByPeriod(filteredLogs, period, agent);
         const labels = Object.keys(groupedData).sort();
         const data = labels.map(label => groupedData[label]);
@@ -23,6 +26,7 @@ function filterRequestData(period, now, agent) {
         return { filteredData: data, filteredLabels: labels };
     }
 }
+
 
 function filterTokenData(period, now, agent) {
     const usageLogs = agent.usageLogs;

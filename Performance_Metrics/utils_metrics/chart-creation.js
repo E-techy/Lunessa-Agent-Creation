@@ -30,58 +30,103 @@ function initializeCharts(agent) {
 
 function createRequestTimelineChart(agent) {
     console.log('Creating request timeline chart...');
-    const canvas = document.getElementById('requestChart');
+
+    const canvas = document.getElementById("requestChart");
     if (!canvas) {
-        console.error('requestChart canvas not found');
+        console.error("requestChart canvas not found");
         return;
     }
-    
-    const ctx = canvas.getContext('2d');
+
+    const ctx = canvas.getContext("2d");
     if (!ctx) {
-        console.error('Could not get 2d context for requestChart');
+        console.error("Could not get 2d context for requestChart");
         return;
     }
+
+    const requestLogs = agent.requestHandledLogs || [];
+    if (!requestLogs.length) {
+        console.warn("No request logs found for agent");
+    }
+
+    // Get the current period from the active button or default to 'days'
+    const currentPeriod = currentTimePeriods.requestChart || 'days';
     
-    const requestLogs = agent.requestHandledLogs;
-    
-    // Process request data by hour
-    const hourlyData = {};
-    requestLogs.forEach(log => {
-        const date = new Date(log.timestamp);
-        const hour = date.getHours();
-        hourlyData[hour] = (hourlyData[hour] || 0) + 1;
-    });
-    
-    const labels = Array.from({length: 24}, (_, i) => `${i}:00`);
-    const data = labels.map((_, i) => hourlyData[i] || 0);
-    
+    // Use the existing filter function to get data for the current period
+    const now = new Date();
+    const { filteredData, filteredLabels } = filterRequestData(currentPeriod, now, agent);
+
     try {
+        // Destroy old instance if exists
+        if (chartInstances.requestChart) {
+            chartInstances.requestChart.destroy();
+            console.log("🗑️ Old requestChart destroyed");
+        }
+
         chartInstances.requestChart = new Chart(ctx, {
-            type: 'line',
+            type: "line",
             data: {
-                labels: labels,
+                labels: filteredLabels,
                 datasets: [{
-                    label: 'Requests Handled',
-                    data: data,
-                    borderColor: '#8B5CF6',
-                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                    label: "Requests Handled",
+                    data: filteredData,
+                    borderColor: "#8B5CF6",
+                    backgroundColor: "rgba(139, 92, 246, 0.1)",
                     borderWidth: 3,
                     fill: true,
                     tension: 0.4,
-                    pointBackgroundColor: '#8B5CF6',
-                    pointBorderColor: '#18181B',
+                    pointBackgroundColor: "#8B5CF6",
+                    pointBorderColor: "#18181B",
                     pointBorderWidth: 2,
                     pointRadius: 4,
                     pointHoverRadius: 8,
                 }]
             },
-            options: getChartOptions('requests', true)
+            options: getChartOptions("requests", true)
         });
-        console.log('Request timeline chart created successfully');
+        console.log("✅ Request timeline chart created successfully");
     } catch (error) {
-        console.error('Error creating request timeline chart:', error);
+        console.error("Error creating request timeline chart:", error);
     }
 }
+
+// You'll also need this helper function that works with your existing filtering system
+function filterRequestData(period, now, agent) {
+    console.log(`Filtering request data for period: ${period}`);
+    
+    const requestLogs = agent.requestHandledLogs || [];
+    
+    if (period === 'lifetime') {
+        return {
+            filteredData: [requestLogs.length],
+            filteredLabels: ['Total Requests']
+        };
+    }
+    
+    // Filter logs by the selected time period
+    const filteredLogs = filterLogsByPeriod(requestLogs, period, now, agent);
+    
+    // Group the filtered data by the period
+    const groupedData = groupDataByPeriod(filteredLogs, period, agent);
+    
+    // Convert to arrays for Chart.js
+    const filteredLabels = Object.keys(groupedData).sort();
+    const filteredData = filteredLabels.map(label => groupedData[label] || 0);
+    
+    // If no data, provide empty arrays with at least one point
+    if (filteredLabels.length === 0) {
+        const emptyLabel = getPeriodLabel(period, 0, now, agent);
+        return {
+            filteredData: [0],
+            filteredLabels: [emptyLabel]
+        };
+    }
+    
+    return {
+        filteredData,
+        filteredLabels
+    };
+}
+
 
 function createTokenUsageChart(agent) {
     console.log('Creating token usage chart...');
