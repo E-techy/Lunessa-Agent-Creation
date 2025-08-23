@@ -1,31 +1,62 @@
+// Helper function to capitalize the first letter of each word
+function capitalizeFirstLetter(str) {
+    if (!str) return str;
+    return str.split(' ')
+              .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+              .join(' ');
+}
+
 function populateAgentInfo() {
     console.log('Populating agent info...');
     const details = agent.agentBasicDetails;
     
-    // Update agent profile
+    // Header elements
     const agentNameEl = document.getElementById('agentName');
     const agentIdEl = document.getElementById('agentId');
-    const companyNameEl = document.getElementById('companyName');
-    const companyOwnerEl = document.getElementById('companyOwner');
-    const companyEmailEl = document.getElementById('companyEmail');
-    const companyPhoneEl = document.getElementById('companyPhone');
+    const agentInitialsEl = document.getElementById('agentInitials');
+    
+    // Agent information section elements
+    const agentNameDisplayEl = document.getElementById('agentNameDisplay');
+    const agentIdDisplayEl = document.getElementById('agentIdDisplay');
     const establishmentDateEl = document.getElementById('establishmentDate');
+    
+    // Company information section elements
+    const companyNameEl = document.getElementById('companyName');
+    const companyOwnerNameEl = document.getElementById('companyOwnerName');
+    const companyEmailEl = document.getElementById('companyEmail');
+    const companyHumanServiceNumberEl = document.getElementById('companyHumanServiceNumber');
+    
+    // Metrics elements
     const totalRequestsEl = document.getElementById('totalRequests');
     const satisfactionRateEl = document.getElementById('satisfactionRate');
     const availableTokensEl = document.getElementById('availableTokens');
     const totalTokensEl = document.getElementById('totalTokens');
-    const agentInitialsEl = document.getElementById('agentInitials');
 
-    if (agentNameEl) agentNameEl.textContent = details.agentName;
+    // Populate header information
+    if (agentNameEl) agentNameEl.textContent = capitalizeFirstLetter(details.agentName);
     if (agentIdEl) agentIdEl.textContent = details.agentId;
-    if (companyNameEl) companyNameEl.textContent = details.companyName;
-    if (companyOwnerEl) companyOwnerEl.textContent = `Owner: ${details.companyOwnerName}`;
-    if (companyEmailEl) companyEmailEl.textContent = details.companyEmail;
-    if (companyPhoneEl) companyPhoneEl.textContent = `📞 ${details.companyHumanServiceNumber}`;
     
-    // Format establishment date
+    // Generate and set agent initials
+    const initials = details.agentName.split(' ').map(name => name[0]).join('').toUpperCase();
+    if (agentInitialsEl) agentInitialsEl.textContent = initials;
+    
+    // Populate agent information section
+    if (agentNameDisplayEl) agentNameDisplayEl.textContent = capitalizeFirstLetter(details.agentName);
+    if (agentIdDisplayEl) agentIdDisplayEl.textContent = details.agentId;
+    
+    // Format and populate establishment date
     const establishmentDate = new Date(details.establishmentDate);
-    if (establishmentDateEl) establishmentDateEl.textContent = `Established: ${establishmentDate.toLocaleDateString()}`;
+    if (establishmentDateEl) establishmentDateEl.textContent = establishmentDate.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric' 
+    });
+    
+    // Populate company information section
+    if (companyNameEl) companyNameEl.textContent = details.companyName;
+    if (companyOwnerNameEl) companyOwnerNameEl.textContent = capitalizeFirstLetter(details.companyOwnerName);
+    if (companyEmailEl) companyEmailEl.textContent = details.companyEmail;
+    if (companyHumanServiceNumberEl) companyHumanServiceNumberEl.textContent = details.companyHumanServiceNumber;
     
     // Update metrics
     if (totalRequestsEl) totalRequestsEl.textContent = agent.totalRequestsHandled;
@@ -36,9 +67,19 @@ function populateAgentInfo() {
     const totalTokensUsed = agent.usageLogs.reduce((sum, log) => sum + log.tokensUsed, 0);
     if (totalTokensEl) totalTokensEl.textContent = totalTokensUsed;
     
-    // Update agent initials
-    const initials = details.agentName.split(' ').map(name => name[0]).join('').toUpperCase();
-    if (agentInitialsEl) agentInitialsEl.textContent = initials;
+    // Update services count
+    const servicesCountEl = document.getElementById('servicesCount');
+    const servicesCount = agent.agentBasicDetails.items ? agent.agentBasicDetails.items.length : 0;
+    if (servicesCountEl) servicesCountEl.textContent = servicesCount;
+    
+    console.log('Agent info populated successfully with the following data:');
+    console.log('- Agent ID:', details.agentId);
+    console.log('- Agent Name:', details.agentName);
+    console.log('- Company Name:', details.companyName);
+    console.log('- Company Owner Name:', details.companyOwnerName);
+    console.log('- Company Email:', details.companyEmail);
+    console.log('- Company Human Service Number:', details.companyHumanServiceNumber);
+    console.log('- Services Count:', servicesCount);
 }
 
 function populateServices() {
@@ -188,7 +229,7 @@ function populateModificationHistory() {
                         <div class="company-info-grid">
                             <div class="history-detail-row">
                                 <strong>🏢 Company Name</strong> 
-                                <span>${entry.companyName}</span>
+                                <span>${capitalizeFirstLetter(entry.companyName)}</span>
                             </div>
                             <div class="history-detail-row">
                                 <strong>📅 Establishment Date</strong> 
@@ -196,7 +237,7 @@ function populateModificationHistory() {
                             </div>
                             <div class="history-detail-row">
                                 <strong>👤 Company Owner</strong> 
-                                <span>${entry.companyOwnerName}</span>
+                                <span>${capitalizeFirstLetter(entry.companyOwnerName)}</span>
                             </div>
                             <div class="history-detail-row">
                                 <strong>📞 Service Number</strong> 
