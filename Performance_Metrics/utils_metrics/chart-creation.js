@@ -274,19 +274,33 @@ function createSatisfactionChart(agent) {
     }
     
     const ctx = canvas.getContext('2d');
-    const satisfactionLogs = agent.satisfactionRateLogs;
+    const satisfactionLogs = agent.satisfactionRateLogs || [];
     
-    const labels = satisfactionLogs.map((_, index) => `Review ${index + 1}`);
-    const data = satisfactionLogs.map(log => log.reviewStar);
+    if (!satisfactionLogs.length) {
+        console.warn("No satisfaction logs found for agent");
+    }
+
+    // Get the current period from the active button or default to 'days'
+    const currentPeriod = currentTimePeriods.satisfactionChart || 'days';
+    
+    // Use the existing filter function to get data for the current period
+    const now = new Date();
+    const { filteredData, filteredLabels } = filterSatisfactionData(currentPeriod, now, agent);
     
     try {
+        // Destroy old instance if exists
+        if (chartInstances.satisfactionChart) {
+            chartInstances.satisfactionChart.destroy();
+            console.log("🗑️ Old satisfactionChart destroyed");
+        }
+
         chartInstances.satisfactionChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: labels,
+                labels: filteredLabels,
                 datasets: [{
                     label: 'Customer Satisfaction',
-                    data: data,
+                    data: filteredData,
                     borderColor: '#22C55E',
                     backgroundColor: 'rgba(34, 197, 94, 0.1)',
                     borderWidth: 3,
@@ -329,10 +343,82 @@ function createSatisfactionChart(agent) {
                 }
             }
         });
-        console.log('Satisfaction chart created successfully');
+        console.log('✅ Satisfaction chart created successfully');
     } catch (error) {
         console.error('Error creating satisfaction chart:', error);
     }
+}
+
+// You'll also need this helper function that works with your existing filtering system
+function filterSatisfactionData(period, now, agent) {
+    console.log(`Filtering satisfaction data for period: ${period}`);
+    
+    const satisfactionLogs = agent.satisfactionRateLogs || [];
+    
+    if (period === 'lifetime') {
+        // Show all satisfaction ratings for lifetime view
+        const labels = satisfactionLogs.map((_, index) => `Review ${index + 1}`);
+        const data = satisfactionLogs.map(log => log.reviewStar || 0);
+        
+        return {
+            filteredData: data.length ? data : [0],
+            filteredLabels: labels.length ? labels : ['No Reviews']
+        };
+    }
+    
+    // Filter logs by the selected time period
+    const filteredLogs = filterLogsByPeriod(satisfactionLogs, period, now, agent);
+    
+    // Group the filtered data by the period and calculate average satisfaction for each group
+    const groupedData = {};
+    const groupedCounts = {};
+    
+    filteredLogs.forEach(log => {
+        const date = new Date(log.timestamp);
+        let key;
+        
+        switch(period) {
+            case 'days':
+                key = date.toLocaleDateString();
+                break;
+            case 'weeks':
+                const weekStart = new Date(date);
+                weekStart.setDate(date.getDate() - date.getDay());
+                key = `Week of ${weekStart.toLocaleDateString()}`;
+                break;
+            case 'months':
+                key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+                break;
+            case 'years':
+                key = String(date.getFullYear());
+                break;
+            default:
+                key = date.toLocaleDateString();
+        }
+        
+        groupedData[key] = (groupedData[key] || 0) + (log.reviewStar || 0);
+        groupedCounts[key] = (groupedCounts[key] || 0) + 1;
+    });
+    
+    // Convert to arrays for Chart.js and calculate averages
+    const sortedKeys = Object.keys(groupedData).sort();
+    const averageData = sortedKeys.map(key => {
+        return groupedCounts[key] > 0 ? (groupedData[key] / groupedCounts[key]) : 0;
+    });
+    
+    // If no data, provide empty arrays with at least one point
+    if (sortedKeys.length === 0) {
+        const emptyLabel = getPeriodLabel(period, 0, now, agent);
+        return {
+            filteredData: [0],
+            filteredLabels: [emptyLabel]
+        };
+    }
+    
+    return {
+        filteredData: averageData,
+        filteredLabels: sortedKeys
+    };
 }
 
 function createRatingDistributionChart(agent) {
