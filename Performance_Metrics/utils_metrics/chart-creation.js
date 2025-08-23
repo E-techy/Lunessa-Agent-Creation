@@ -1,4 +1,4 @@
-function initializeCharts() {
+function initializeCharts(agent) {
     console.log('Initializing charts...');
     
     if (typeof Chart === 'undefined') {
@@ -17,18 +17,18 @@ function initializeCharts() {
     }
     
     try {
-        createRequestTimelineChart();
-        createTokenUsageChart();
-        createSatisfactionChart();
-        createRatingDistributionChart();
-        createTokenPerRequestChart();
+        createRequestTimelineChart(agent);
+        createTokenUsageChart(agent);
+        createSatisfactionChart(agent);
+        createRatingDistributionChart(agent);
+        createTokenPerRequestChart(agent);
         console.log('All charts initialized successfully');
     } catch (error) {
         console.error('Error initializing charts:', error);
     }
 }
 
-function createRequestTimelineChart() {
+function createRequestTimelineChart(agent) {
     console.log('Creating request timeline chart...');
     const canvas = document.getElementById('requestChart');
     if (!canvas) {
@@ -83,7 +83,7 @@ function createRequestTimelineChart() {
     }
 }
 
-function createTokenUsageChart() {
+function createTokenUsageChart(agent) {
     console.log('Creating token usage chart...');
     const canvas = document.getElementById('tokenChart');
     if (!canvas) {
@@ -133,7 +133,7 @@ function createTokenUsageChart() {
     }
 }
 
-function createSatisfactionChart() {
+function createSatisfactionChart(agent) {
     console.log('Creating satisfaction chart...');
     const canvas = document.getElementById('satisfactionChart');
     if (!canvas) {
@@ -203,7 +203,7 @@ function createSatisfactionChart() {
     }
 }
 
-function createRatingDistributionChart() {
+function createRatingDistributionChart(agent) {
     console.log('Creating rating distribution chart...');
     const canvas = document.getElementById('ratingChart');
     if (!canvas) {
@@ -262,7 +262,7 @@ function createRatingDistributionChart() {
     }
 }
 
-function createTokenPerRequestChart() {
+function createTokenPerRequestChart(agent) {
     console.log('Creating token per request chart...');
     const canvas = document.getElementById('tokenPerRequestChart');
     if (!canvas) {

@@ -1,10 +1,10 @@
 // Activity heatmap functions
-function createActivityHeatmap() {
+function createActivityHeatmap(agent) {
     console.log('Creating activity heatmap...');
-    filterHeatmapByTimePeriod('days'); // Initialize with days view
+    filterHeatmapByTimePeriod('days', agent); // Initialize with days view
 }
 
-function generateActivityData() {
+function generateActivityData(agent) {
     // Generate activity data based on actual request timestamps
     const activity = new Array(24).fill(0);
     

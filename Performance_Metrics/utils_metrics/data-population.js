@@ -6,7 +6,7 @@ function capitalizeFirstLetter(str) {
               .join(' ');
 }
 
-function populateAgentInfo() {
+function populateAgentInfo(agent) {
     console.log('Populating agent info...');
     const details = agent.agentBasicDetails;
     
@@ -82,7 +82,7 @@ function populateAgentInfo() {
     console.log('- Services Count:', servicesCount);
 }
 
-function populateServices() {
+function populateServices(agent) {
     console.log('Populating services...');
     const servicesGrid = document.getElementById('servicesGrid');
     if (!servicesGrid) return;
@@ -117,7 +117,7 @@ function populateServices() {
     `).join('');
 }
 
-function populateReviews() {
+function populateReviews(agent) {
     console.log('Populating reviews...');
     const reviewsGrid = document.getElementById('reviewsGrid');
     if (!reviewsGrid) return;
@@ -147,7 +147,7 @@ function populateReviews() {
     }).join('');
 }
 
-function populateModificationHistory() {
+function populateModificationHistory(agent) {
     console.log('Populating modification history...');
     const historyTimeline = document.getElementById('historyTimeline');
     if (!historyTimeline) return;

@@ -1,5 +1,5 @@
 // Heatmap Filtering Functions
-function filterHeatmapByTimePeriod(period) {
+function filterHeatmapByTimePeriod(period, agent) {
     console.log(`Filtering heatmap by period: ${period}`);
     
     const heatmapContainer = document.getElementById('activityHeatmap');
