@@ -60,7 +60,37 @@ function populateAgentInfo(agent) {
     
     // Update metrics
     if (totalRequestsEl) totalRequestsEl.textContent = agent.totalRequestsHandled;
-    if (satisfactionRateEl) satisfactionRateEl.textContent = agent.satisfactionRate;
+
+
+    // updating coloring of satisfaction rate based on its value 
+    const satisfactionCard = satisfactionRateEl.closest('.metric-card');
+    
+    if (satisfactionRateEl && satisfactionCard) {
+        // Update the text content
+        satisfactionRateEl.textContent = agent.satisfactionRate;
+        
+        // Remove all existing satisfaction color classes
+        satisfactionCard.classList.remove(
+            'satisfaction-red',
+            'satisfaction-yellow', 
+            'satisfaction-orange',
+            'satisfaction-green'
+        );
+        
+        // Add appropriate class based on satisfaction rate
+        const rate = parseFloat(agent.satisfactionRate);
+        
+        if (rate < 25) {
+            satisfactionCard.classList.add('satisfaction-red');
+        } else if (rate < 50) {
+            satisfactionCard.classList.add('satisfaction-yellow');
+        } else if (rate <= 80) {
+            satisfactionCard.classList.add('satisfaction-orange');
+        } else {
+            satisfactionCard.classList.add('satisfaction-green');
+        }
+    }
+
     if (availableTokensEl) availableTokensEl.textContent = details.availableTokens;
     
     // Calculate total tokens used

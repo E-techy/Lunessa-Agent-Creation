@@ -48,3 +48,61 @@
     letter-spacing: 0.5px;
     line-height: 1.4;
 }
+
+
+/* Satisfaction Rate Color Classes */
+.satisfaction-red {
+    border: 2px solid #ef4444 !important;
+    background: rgba(239, 68, 68, 0.1) !important;
+}
+
+.satisfaction-red .metric-value {
+    color: #ef4444 !important;
+}
+
+.satisfaction-red .metric-label {
+    color: #ef4444 !important;
+    font-weight: 600;
+}
+
+.satisfaction-yellow {
+    border: 2px solid #eab308 !important;
+    background: rgba(234, 179, 8, 0.1) !important;
+}
+
+.satisfaction-yellow .metric-value {
+    color: #eab308 !important;
+}
+
+.satisfaction-yellow .metric-label {
+    color: #eab308 !important;
+    font-weight: 600;
+}
+
+.satisfaction-orange {
+    border: 2px solid #f97316 !important;
+    background: rgba(249, 115, 22, 0.1) !important;
+}
+
+.satisfaction-orange .metric-value {
+    color: #f97316 !important;
+}
+
+.satisfaction-orange .metric-label {
+    color: #f97316 !important;
+    font-weight: 600;
+}
+
+.satisfaction-green {
+    border: 2px solid #22c55e !important;
+    background: rgba(34, 197, 94, 0.1) !important;
+}
+
+.satisfaction-green .metric-value {
+    color: #22c55e !important;
+}
+
+.satisfaction-green .metric-label {
+    color: #22c55e !important;
+    font-weight: 600;
+}
