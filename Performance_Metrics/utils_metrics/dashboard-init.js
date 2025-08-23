@@ -80,7 +80,7 @@ async function initializeDashboard(agent) {
 
         setTimeout(() => {
             initializeCharts(agent);
-            setupTimePeriodButtons();
+            setupTimePeriodButtons(agent);
         }, 200);
 
         console.log("Dashboard initialization complete");

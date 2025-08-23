@@ -82,7 +82,6 @@ async function fetchAgentDataForInitialLoad() {
 
 // Setting agent object for the global scope so that everyone can access it 
 
-
 // Auto-run for initial load before the page loads
 window.agentDataReady = (async () => {
   let agent = await fetchAgentDataForInitialLoad();

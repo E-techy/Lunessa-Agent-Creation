@@ -18,7 +18,7 @@ function filterHeatmapByTimePeriod(period, agent) {
     heatmapContainer.setAttribute('data-period', period);
     
     const now = new Date();
-    let filteredLogs = filterLogsByPeriod(agent.requestHandledLogs, period, now);
+    let filteredLogs = filterLogsByPeriod(agent.requestHandledLogs, period, now, agent);
     
     // Update title and info based on period
     const titles = {

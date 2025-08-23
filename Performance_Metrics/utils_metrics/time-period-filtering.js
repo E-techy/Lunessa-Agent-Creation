@@ -1,5 +1,5 @@
 // Time Period Filtering Functions
-function setupTimePeriodButtons() {
+function setupTimePeriodButtons(agent) {
     console.log('Setting up time period buttons...');
     
     const timePeriodButtons = document.querySelectorAll('.time-period-btn');
@@ -19,15 +19,15 @@ function setupTimePeriodButtons() {
             
             // Filter and update chart or heatmap
             if (chartId === 'activityHeatmap') {
-                filterHeatmapByTimePeriod(period);
+                filterHeatmapByTimePeriod(period, agent);
             } else {
-                filterChartByTimePeriod(chartId, period);
+                filterChartByTimePeriod(chartId, period, agent);
             }
         });
     });
 }
 
-function filterChartByTimePeriod(chartId, period) {
+function filterChartByTimePeriod(chartId, period, agent) {
     console.log(`Filtering ${chartId} by period: ${period}`);
     
     if (!chartInstances[chartId]) {
@@ -43,19 +43,19 @@ function filterChartByTimePeriod(chartId, period) {
     // Get the original data based on chart type
     switch(chartId) {
         case 'requestChart':
-            ({ filteredData, filteredLabels } = filterRequestData(period, now));
+            ({ filteredData, filteredLabels } = filterRequestData(period, now, agent));
             break;
         case 'tokenChart':
-            ({ filteredData, filteredLabels } = filterTokenData(period, now));
+            ({ filteredData, filteredLabels } = filterTokenData(period, now, agent));
             break;
         case 'satisfactionChart':
-            ({ filteredData, filteredLabels } = filterSatisfactionData(period, now));
+            ({ filteredData, filteredLabels } = filterSatisfactionData(period, now, agent));
             break;
         case 'ratingChart':
-            ({ filteredData, filteredLabels } = filterRatingData(period, now));
+            ({ filteredData, filteredLabels } = filterRatingData(period, now, agent));
             break;
         case 'tokenPerRequestChart':
-            ({ filteredData, filteredLabels } = filterTokenPerRequestData(period, now));
+            ({ filteredData, filteredLabels } = filterTokenPerRequestData(period, now, agent));
             break;
     }
     

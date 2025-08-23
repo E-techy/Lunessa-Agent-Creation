@@ -1,9 +1,9 @@
-function filterLogsByPeriod(logs, period, now) {
+function filterLogsByPeriod(logs, period, now, agent) {
     if (period === 'lifetime') {
         return logs;
     }
     
-    const periodMs = getPeriodMilliseconds(period);
+    const periodMs = getPeriodMilliseconds(period , agent);
     const cutoffTime = new Date(now.getTime() - periodMs);
     
     return logs.filter(log => {
@@ -12,7 +12,7 @@ function filterLogsByPeriod(logs, period, now) {
     });
 }
 
-function getPeriodMilliseconds(period) {
+function getPeriodMilliseconds(period,agent) {
     const msPerDay = 24 * 60 * 60 * 1000;
     
     switch(period) {
@@ -24,7 +24,7 @@ function getPeriodMilliseconds(period) {
     }
 }
 
-function groupDataByPeriod(logs, period) {
+function groupDataByPeriod(logs, period,agent) {
     const grouped = {};
     
     logs.forEach(log => {
@@ -56,7 +56,7 @@ function groupDataByPeriod(logs, period) {
     return grouped;
 }
 
-function getPeriodLabel(period, index, date) {
+function getPeriodLabel(period, index, date, agent) {
     switch(period) {
         case 'days':
             return date.toLocaleDateString();
