@@ -1,4 +1,4 @@
-function filterRequestData(period, now) {
+function filterRequestData(period, now, agent) {
     const requestLogs = agent.requestHandledLogs;
     let filteredLogs = filterLogsByPeriod(requestLogs, period, now);
     
@@ -24,7 +24,7 @@ function filterRequestData(period, now) {
     }
 }
 
-function filterTokenData(period, now) {
+function filterTokenData(period, now, agent) {
     const usageLogs = agent.usageLogs;
     let filteredLogs = filterLogsByPeriod(usageLogs, period, now);
     
@@ -42,7 +42,7 @@ function filterTokenData(period, now) {
     return { filteredData: data, filteredLabels: labels };
 }
 
-function filterSatisfactionData(period, now) {
+function filterSatisfactionData(period, now, agent) {
     const satisfactionLogs = agent.satisfactionRateLogs;
     let filteredLogs = filterLogsByPeriod(satisfactionLogs, period, now);
     
@@ -53,7 +53,7 @@ function filterSatisfactionData(period, now) {
     return { filteredData: data, filteredLabels: labels };
 }
 
-function filterRatingData(period, now) {
+function filterRatingData(period, now, agent) {
     const reviews = agent.customerReviews;
     let filteredReviews = filterLogsByPeriod(reviews, period, now);
     
@@ -69,7 +69,7 @@ function filterRatingData(period, now) {
     return { filteredData: data, filteredLabels: labels };
 }
 
-function filterTokenPerRequestData(period, now) {
+function filterTokenPerRequestData(period, now, agent) {
     const usageLogs = agent.usageLogs;
     let filteredLogs = filterLogsByPeriod(usageLogs, period, now);
     

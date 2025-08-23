@@ -95,6 +95,13 @@ app.get("/performance_metrics", (req, res) =>{
   res.sendFile(__dirname+"/Performance_Metrics/performance_metrics.html");
 } )
 
+// Route for sending the agents details for agent selection
+app.get("/performance_metrics/agents_selection", (req, res) =>{
+
+    // agent selection page for performance metrics
+    res.sendFile(__dirname + "/Performance_Metrics/performance_metrics_agent_selection.html")
+})
+
 // handle data sending for the performance metrics page
 
 app.post("/performance_metrics/:metricType", authenticateUser, async (req, res) => {
@@ -170,6 +177,10 @@ app.listen(PORT, () => {
 
   // Agent Creation route url
   console.log(`✅ Agent creation server is running on http://localhost:${PORT}/create_new_agent`);
+
+
+  // Agent Selection page for performance metrics
+    console.log(`✅ Agent creation server is running on http://localhost:${PORT}/performance_metrics/agents_selection`);
 
 
   // Agent metrics url
