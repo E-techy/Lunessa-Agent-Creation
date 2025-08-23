@@ -112,20 +112,42 @@
 // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFtYW5AZXhhbXBsZXMuY29tIiwidXNlcm5hbWUiOiJhbWFuMTIzNCIsIm5hbWUiOiJBbWFuIEt1bWFyIiwiZ2VuZGVyIjoibWFsZSIsInBob25lIjoiKzkxMTIzNDU2Nzg5MCIsImRvYiI6IjIwMDAtMDUtMTJUMDA6MDA6MDAuMDAwKzAwOjAwIiwibmF0aW9uYWxpdHkiOiJJbmRpYW4iLCJhZGRyZXNzIjoiUmFuY2hpLCBKaGFya2hhbmQiLCJpYXQiOjE3NTU3MjA5MjgsImV4cCI6MTc1NTgyODkyOH0.LcuMNJdFc1l2jfT4HWU8F-oMvyeiCihoIGAu103Yw_s
 
 
-const jwt = require("jsonwebtoken");
+// const jwt = require("jsonwebtoken");
 
-const JWT_SECRET_KEY = "7xdP6EGzCqIrx4aAAQvHyvVfKxI9fkSdEyMyllB+uX8=";
+// const JWT_SECRET_KEY = "7xdP6EGzCqIrx4aAAQvHyvVfKxI9fkSdEyMyllB+uX8=";
 
-const payload = {
-  email: "aman@examples.com",
-  username: "aman1234",
-  name: "Aman Kumar",
-  gender: "male",
-  phone: "+911234567890",
-  dob: "2000-05-12T00:00:00.000+00:00",
-  nationality: "Indian",
-  address: "Ranchi, Jharkhand",
-};
+// const payload = {
+//   email: "aman@examples.com",
+//   username: "aman1234",
+//   name: "Aman Kumar",
+//   gender: "male",
+//   phone: "+911234567890",
+//   dob: "2000-05-12T00:00:00.000+00:00",
+//   nationality: "Indian",
+//   address: "Ranchi, Jharkhand",
+// };
 
-const token = jwt.sign(payload, JWT_SECRET_KEY, { expiresIn: "10d" });
-console.log(token);
+// const token = jwt.sign(payload, JWT_SECRET_KEY, { expiresIn: "10d" });
+// console.log(token);
+
+
+// test_create_performance_metrics.js
+
+const createPerformanceMetrics = require("./utils/performance_metrics_utility/create_performance_metrics");
+
+async function test() {
+  try {
+    const username = "aman1234";
+    const agentId = "AGT-5f57aaa9d1b465e8";
+
+    const result = await createPerformanceMetrics(username, agentId);
+
+    console.log("Performance Metrics Output:");
+    console.dir(result, { depth: null }); // pretty print with full depth
+  } catch (err) {
+    console.error("Test failed:", err);
+  }
+}
+
+test();
+

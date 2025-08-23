@@ -149,7 +149,7 @@ app.post("/performance_metrics/:metricType", authenticateUser, async (req, res) 
         break;
 
       case "all": // when user hits just /performance_metrics
-        result = await createPerformanceMetrics(username);
+        result = await createPerformanceMetrics(username, agentId);
         break;
 
       default:
