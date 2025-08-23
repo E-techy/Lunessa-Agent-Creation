@@ -17,22 +17,26 @@ window.addEventListener('load', function() {
 
 function initializeDashboard() {
     console.log('Starting dashboard initialization...');
-    
-    try {
-        populateAgentInfo();
-        populateServices();
-        populateReviews();
-        populateModificationHistory();
-        createActivityHeatmap();
-        
-        // Wait a bit more before initializing charts
-        setTimeout(() => {
-            initializeCharts();
-            setupTimePeriodButtons();
-        }, 200);
-        
-        console.log('Dashboard initialization complete');
-    } catch (error) {
-        console.error('Error initializing dashboard:', error);
-    }
+
+    window.agentDataReady.then((agent) => {
+        try {
+            populateAgentInfo(agent);
+            populateServices(agent);
+            populateReviews(agent);
+            populateModificationHistory(agent);
+            createActivityHeatmap(agent);
+
+            // Wait a bit more before initializing charts
+            setTimeout(() => {
+                initializeCharts(agent);
+                setupTimePeriodButtons();
+            }, 200);
+
+            console.log('Dashboard initialization complete');
+        } catch (error) {
+            console.error('Error initializing dashboard:', error);
+        }
+    }).catch((err) => {
+        console.error("Failed to load agent data:", err);
+    });
 }

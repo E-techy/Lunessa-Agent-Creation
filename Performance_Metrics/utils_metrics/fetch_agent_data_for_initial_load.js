@@ -287,10 +287,10 @@ async function fetchAgentDataForInitialLoad() {
   }
 }
 
-
-// Auto-run for initial load
-(async () => {
-  const agents = await fetchAgentDataForInitialLoad();
-  console.log("Agent data stored in IndexedDB:", agents);
+let agent;
+// Auto-run for initial load before the page loads
+window.agentDataReady = (async () => {
+  agent = await fetchAgentDataForInitialLoad();
+  console.log("Agent data stored in IndexedDB:", agent);
 })();
 
