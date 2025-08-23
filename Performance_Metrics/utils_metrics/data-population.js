@@ -115,21 +115,113 @@ function populateModificationHistory() {
     
     historyTimeline.innerHTML = history.map((entry, index) => {
         const date = new Date(entry.timestamp);
+        const establishmentDate = new Date(entry.establishmentDate);
         const itemsCount = entry.items ? entry.items.length : 0;
         
+        // Generate detailed items HTML with full information
+        const itemsHTML = entry.items && entry.items.length > 0 ? 
+            entry.items.map((item, itemIndex) => {
+                // Find full item details from current items
+                const fullItem = agent.agentBasicDetails.items.find(fullItemData => 
+                    fullItemData.itemName === item.itemName && fullItemData.itemCode === item.itemCode
+                );
+                
+                return `
+                    <div class="history-item-entry">
+                        <div class="item-header">
+                            <div class="item-title">
+                                <span class="item-name">${item.itemName}</span>
+                                <span class="item-code">${item.itemCode}</span>
+                            </div>
+                            <button class="item-expand-btn" onclick="toggleItemDetails(${index}, ${itemIndex})">
+                                <svg class="item-expand-icon" id="item-expand-icon-${index}-${itemIndex}" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="item-details" id="item-details-${index}-${itemIndex}" style="display: none;">
+                            ${fullItem ? `
+                                <div class="item-detail-section">
+                                    <h5>Description:</h5>
+                                    <p>${fullItem.itemInitialWorkingExplanation}</p>
+                                </div>
+                                <div class="item-detail-section">
+                                    <h5>Process Steps:</h5>
+                                    <ol>
+                                        ${fullItem.itemRunningSteps.map(step => `<li>${step}</li>`).join('')}
+                                    </ol>
+                                </div>
+                                <div class="item-detail-section">
+                                    <h5>Common Problems & Solutions:</h5>
+                                    <div class="problems-solutions">
+                                        ${fullItem.commonProblemsSolutions.map(solution => `
+                                            <div class="problem-solution-pair">
+                                                <div class="problem">
+                                                    <strong>Problem:</strong> ${solution.problem}
+                                                </div>
+                                                <div class="solution">
+                                                    <strong>Solution:</strong> ${solution.solution}
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            ` : `
+                                <div class="item-detail-section">
+                                    <p class="no-details">Detailed information not available for this item.</p>
+                                </div>
+                            `}
+                        </div>
+                    </div>
+                `;
+            }).join('') : '<div class="no-items">No items added in this modification</div>';
+        
         return `
-            <div class="history-item">
+            <div class="history-item" data-entry-index="${index}">
                 <div class="history-marker"></div>
                 <div class="history-content">
                     <div class="history-header">
-                        <h4>System Update #${index + 1}</h4>
-                        <span class="history-date">${date.toLocaleDateString()} ${date.toLocaleTimeString()}</span>
+                        <h4>Modification #${index + 1}</h4>
+                        <span class="history-date">${date.toLocaleDateString()} at ${date.toLocaleTimeString()}</span>
                     </div>
                     <div class="history-details">
-                        <p><strong>Company:</strong> ${entry.companyName}</p>
-                        <p><strong>Owner:</strong> ${entry.companyOwnerName}</p>
-                        <p><strong>Services Added:</strong> ${itemsCount} item(s)</p>
-                        <p><strong>Description:</strong> ${entry.companyDescription}</p>
+                        <div class="company-info-grid">
+                            <div class="history-detail-row">
+                                <strong>🏢 Company Name</strong> 
+                                <span>${entry.companyName}</span>
+                            </div>
+                            <div class="history-detail-row">
+                                <strong>📅 Establishment Date</strong> 
+                                <span>${establishmentDate.toLocaleDateString()}</span>
+                            </div>
+                            <div class="history-detail-row">
+                                <strong>👤 Company Owner</strong> 
+                                <span>${entry.companyOwnerName}</span>
+                            </div>
+                            <div class="history-detail-row">
+                                <strong>📞 Service Number</strong> 
+                                <span>${entry.companyHumanServiceNumber}</span>
+                            </div>
+                            <div class="history-detail-row">
+                                <strong>✉️ Company Email</strong> 
+                                <span>${entry.companyEmail}</span>
+                            </div>
+                        </div>
+                        <div class="history-detail-row description-row">
+                            <strong>📝 Description</strong> 
+                            <span>${entry.companyDescription}</span>
+                        </div>
+                        <div class="history-items-section">
+                            <div class="items-header" onclick="toggleHistoryItems(${index})">
+                                <strong>Items (${itemsCount})</strong>
+                                <svg class="expand-icon" id="expand-icon-${index}" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </div>
+                            <div class="items-content" id="items-content-${index}" style="display: none;">
+                                ${itemsHTML}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
