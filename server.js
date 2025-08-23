@@ -167,5 +167,11 @@ app.post("/performance_metrics/:metricType", authenticateUser, async (req, res) 
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`✅ Server is running on http://localhost:${PORT}/create_new_agent`);
+
+  // Agent Creation route url
+  console.log(`✅ Agent creation server is running on http://localhost:${PORT}/create_new_agent`);
+
+
+  // Agent metrics url
+  console.log(`✅ Metrics Server is running on http://localhost:${PORT}/performance_metrics`)
 });

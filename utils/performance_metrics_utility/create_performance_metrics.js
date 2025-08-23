@@ -4,87 +4,67 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 /**
- * Create performance metrics object for a given username.
- * @param {string} username - The username of the agent.
+ * Create performance metrics object for a given username & agentId.
+ * @param {string} username - The username of the agent owner.
+ * @param {string} agentId - The agentId of the specific agent.
  * @returns {Promise<object>} Performance metrics object.
  */
-async function createPerformanceMetrics(username) {
+async function createPerformanceMetrics(username, agentId) {
   try {
-    // 1️⃣ Find all agents with the given username
-    const agents = await prisma.CustomerServiceAgents.findMany({
-      where: { username },
+    // 1️⃣ Verify agent ownership
+    const agent = await prisma.CustomerServiceAgents.findUnique({
+      where: { agentId },
     });
 
-    if (!agents || agents.length === 0) {
-      return { error: `No agent found for username: ${username}` };
+    if (!agent) {
+      return { error: `No agent found with agentId: ${agentId}` };
     }
 
-    // 2️⃣ Fetch companyAgentsRegistered only for this username
-    const companyAgentsRegistered = await prisma.CompanyAgentsRegistered.findMany({
-      where: { username },
+    if (agent.username !== username) {
+      return { error: `Agent ${agentId} does not belong to username: ${username}` };
+    }
+
+    // 2️⃣ Fetch performance data for this agentId
+    const usageStats = await prisma.AgentUsageStatistics.findUnique({
+      where: { agentId },
     });
 
-    // ✅ Get total agents and records linked to this username
-    const agentRecord = companyAgentsRegistered.flatMap((rec) => rec.agents || []);
-    const totalAgents = companyAgentsRegistered.reduce(
-      (sum, rec) => sum + (rec.totalAgents || 0),
-      0
-    );
+    const requestsHandled = await prisma.AgentRequestsHandledLogs.findUnique({
+      where: { agentId },
+    });
 
-    // 3️⃣ Build metrics per agent
-    const metricsForAllAgents = await Promise.all(
-      agents.map(async (agent) => {
-        const agentId = agent.agentId;
+    // 3️⃣ Build the agent object in the required format
+    const agentMetrics = {
+      agentBasicDetails: {
+        agentId: agent.agentId,
+        agentName: agent.agentName,
+        username: agent.username,
+        companyName: agent.companyName,
+        establishmentDate: agent.establishmentDate,
+        companyOwnerName: agent.companyOwnerName,
+        companyHumanServiceNumber: agent.companyHumanServiceNumber,
+        companyEmail: agent.companyEmail,
+        companyDescription: agent.companyDescription,
+        availableTokens: agent.availableTokens,
+        lastModified: agent.lastModified,
+        items: agent.items || [], // ✅ make sure items are included
+        modificationHistory: agent.modificationHistory || [],
+      },
 
-        // Fetch AgentUsageStatistics
-        const usageStats = await prisma.AgentUsageStatistics.findUnique({
-          where: { agentId },
-        });
+      customerReviews: usageStats?.customerReviews || [],
 
-        // Fetch AgentRequestsHandledLogs
-        const requestsHandled = await prisma.AgentRequestsHandledLogs.findUnique({
-          where: { agentId },
-        });
+      requestHandledLogs: requestsHandled?.requestLogs || [],
 
-        return {
-          agentBasicDetails: {
-            agentId,
-            agentName: agent.agentName,
-            username: agent.username,
-            companyName: agent.companyName,
-            establishmentDate: agent.establishmentDate,
-            companyOwnerName: agent.companyOwnerName,
-            companyHumanServiceNumber: agent.companyHumanServiceNumber,
-            companyEmail: agent.companyEmail,
-            companyDescription: agent.companyDescription,
-            availableTokens: agent.availableTokens,
-            lastModified: agent.lastModified,
-          },
+      satisfactionRate: usageStats?.satisfactionRate || 0,
 
-          totalRequestsHandled: requestsHandled?.totalRequestsHandled || 0,
+      satisfactionRateLogs: usageStats?.satisfactionRateLogs || [],
 
-          requestHandledLogs: requestsHandled?.requestLogs || [],
+      totalRequestsHandled: requestsHandled?.totalRequestsHandled || 0,
 
-          customerReviews: usageStats?.customerReviews || [],
-
-          usageLogs: usageStats?.usageLogs || [], // ✅ token usage history
-
-          satisfactionRate: usageStats?.satisfactionRate || 0,
-
-          satisfactionRateLogs: usageStats?.satisfactionRateLogs || [],
-
-          modificationHistory: agent.modificationHistory || [],
-        };
-      })
-    );
-
-    // 4️⃣ Final structured response
-    return {
-      username,
-      totalAgents, // ✅ from CompanyAgentsRegistered.username
-      agentRecord, // ✅ all registered agents for this username
-      agents: metricsForAllAgents,
+      usageLogs: usageStats?.usageLogs || [],
     };
+
+    return agentMetrics;
   } catch (err) {
     console.error("Error in createPerformanceMetrics:", err);
     throw err;
