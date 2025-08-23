@@ -137,27 +137,33 @@ function createTokenUsageChart(agent) {
     }
     
     const ctx = canvas.getContext('2d');
-    const usageLogs = agent.usageLogs;
+    const usageLogs = agent.usageLogs || [];
     
-    // Create cumulative token usage
-    let cumulative = 0;
-    const labels = [];
-    const data = [];
+    if (!usageLogs.length) {
+        console.warn("No usage logs found for agent");
+    }
+
+    // Get the current period from the active button or default to 'days'
+    const currentPeriod = currentTimePeriods.tokenChart || 'days';
     
-    usageLogs.forEach((log, index) => {
-        cumulative += log.tokensUsed;
-        labels.push(`Request ${index + 1}`);
-        data.push(cumulative);
-    });
+    // Use the existing filter function to get data for the current period
+    const now = new Date();
+    const { filteredData, filteredLabels } = filterTokenData(currentPeriod, now, agent);
     
     try {
+        // Destroy old instance if exists
+        if (chartInstances.tokenChart) {
+            chartInstances.tokenChart.destroy();
+            console.log("🗑️ Old tokenChart destroyed");
+        }
+
         chartInstances.tokenChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: labels,
+                labels: filteredLabels,
                 datasets: [{
                     label: 'Cumulative Token Usage',
-                    data: data,
+                    data: filteredData,
                     borderColor: '#8B5CF6',
                     backgroundColor: 'rgba(139, 92, 246, 0.2)',
                     borderWidth: 4,
@@ -172,10 +178,91 @@ function createTokenUsageChart(agent) {
             },
             options: getChartOptions('tokens', true)
         });
-        console.log('Token usage chart created successfully');
+        console.log('✅ Token usage chart created successfully');
     } catch (error) {
         console.error('Error creating token usage chart:', error);
     }
+}
+
+// You'll also need this helper function that works with your existing filtering system
+function filterTokenData(period, now, agent) {
+    console.log(`Filtering token data for period: ${period}`);
+    
+    const usageLogs = agent.usageLogs || [];
+    
+    if (period === 'lifetime') {
+        // Create cumulative data for lifetime view
+        let cumulative = 0;
+        const cumulativeData = [];
+        const labels = [];
+        
+        usageLogs.forEach((log, index) => {
+            cumulative += log.tokensUsed || 0;
+            cumulativeData.push(cumulative);
+            labels.push(`Request ${index + 1}`);
+        });
+        
+        return {
+            filteredData: cumulativeData.length ? cumulativeData : [0],
+            filteredLabels: labels.length ? labels : ['No Data']
+        };
+    }
+    
+    // Filter logs by the selected time period
+    const filteredLogs = filterLogsByPeriod(usageLogs, period, now, agent);
+    
+    // Group the filtered data by the period and sum tokens for each group
+    const groupedData = {};
+    
+    filteredLogs.forEach(log => {
+        const date = new Date(log.timestamp);
+        let key;
+        
+        switch(period) {
+            case 'days':
+                key = date.toLocaleDateString();
+                break;
+            case 'weeks':
+                const weekStart = new Date(date);
+                weekStart.setDate(date.getDate() - date.getDay());
+                key = `Week of ${weekStart.toLocaleDateString()}`;
+                break;
+            case 'months':
+                key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+                break;
+            case 'years':
+                key = String(date.getFullYear());
+                break;
+            default:
+                key = date.toLocaleDateString();
+        }
+        
+        groupedData[key] = (groupedData[key] || 0) + (log.tokensUsed || 0);
+    });
+    
+    // Convert to arrays for Chart.js and make cumulative
+    const sortedKeys = Object.keys(groupedData).sort();
+    let cumulative = 0;
+    const cumulativeData = [];
+    
+    sortedKeys.forEach(key => {
+        cumulative += groupedData[key];
+        cumulativeData.push(cumulative);
+    });
+    
+    // If no data, provide empty arrays with at least one point
+    if (sortedKeys.length === 0) {
+        const emptyLabel = getPeriodLabel(period, 0, now, agent);
+        return {
+            filteredData: [0],
+            filteredLabels: [emptyLabel]
+        };
+    }
+    
+    return {
+        filteredData: cumulativeData,
+        filteredLabels: sortedKeys
+    };
 }
 
 function createSatisfactionChart(agent) {

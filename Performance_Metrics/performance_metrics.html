@@ -26,6 +26,7 @@
     <script src="/utils_metrics/time-period-filtering.js"></script>
     <script src="/utils_metrics/time-utilities.js"></script>
     <script src="/utils_metrics/refresh_request_handlingLogs.js"></script>
+    <script src="/utils_metrics/refresh_cumulative_token_usage.js"></script>
 </head>
 <body>
     <div class="container">
@@ -195,7 +196,7 @@
                         </div>
                         <button class="control-btn" onclick="resetZoom('tokenChart')">Reset Zoom</button>
                         <button class="control-btn secondary" onclick="exportChart('tokenChart')">Export</button>
-                        <button class="control-btn refresh-btn" onclick="refreshChart('tokenChart')">
+                        <button class="control-btn refresh-btn" id="tokenUsageRefreshBtn">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <polyline points="23 4 23 10 17 10"></polyline>
                                 <polyline points="1 20 1 14 7 14"></polyline>
