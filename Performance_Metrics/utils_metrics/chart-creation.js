@@ -430,25 +430,38 @@ function createRatingDistributionChart(agent) {
     }
     
     const ctx = canvas.getContext('2d');
-    const reviews = agent.customerReviews;
     
-    // Count ratings
-    const ratingCount = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0};
-    reviews.forEach(review => {
-        ratingCount[review.reviewStar]++;
-    });
+    // Use satisfactionRateLogs as the primary source (same as satisfaction chart)
+    // Fall back to customerReviews for backward compatibility
+    const reviews = agent.satisfactionRateLogs || agent.customerReviews || [];
     
-    const labels = ['1 Star', '2 Stars', '3 Stars', '4 Stars', '5 Stars'];
-    const data = Object.values(ratingCount);
+    if (!reviews.length) {
+        console.warn("No review logs found for agent");
+    }
+
+    // Get the current period from the active button or default to 'days'
+    const currentPeriod = currentTimePeriods.ratingChart || 'days';
+    
+    // Use the existing filter function to get data for the current period
+    const now = new Date();
+    const { filteredData, filteredLabels } = filterRatingData(currentPeriod, now, agent);
+    
+    // Define colors for each rating
     const colors = ['#EF4444', '#F59E0B', '#F59E0B', '#22C55E', '#22C55E'];
     
     try {
+        // Destroy old instance if exists
+        if (chartInstances.ratingChart) {
+            chartInstances.ratingChart.destroy();
+            console.log("🗑️ Old ratingChart destroyed");
+        }
+
         chartInstances.ratingChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: labels,
+                labels: filteredLabels,
                 datasets: [{
-                    data: data,
+                    data: filteredData,
                     backgroundColor: colors,
                     borderColor: '#18181B',
                     borderWidth: 2
@@ -474,10 +487,58 @@ function createRatingDistributionChart(agent) {
                 }
             }
         });
-        console.log('Rating distribution chart created successfully');
+        console.log('✅ Rating distribution chart created successfully');
     } catch (error) {
         console.error('Error creating rating distribution chart:', error);
     }
+}
+
+// You'll also need this helper function that works with your existing filtering system
+function filterRatingData(period, now, agent) {
+    console.log(`Filtering rating distribution data for period: ${period}`);
+    
+    // Use satisfactionRateLogs as primary source, fallback to customerReviews
+    const reviews = agent.satisfactionRateLogs || agent.customerReviews || [];
+    
+    let filteredReviews = reviews;
+    
+    // Apply time period filtering (except for lifetime)
+    if (period !== 'lifetime') {
+        filteredReviews = filterLogsByPeriod(reviews, period, now, agent);
+    }
+    
+    // Count ratings distribution
+    const ratingCount = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0};
+    
+    filteredReviews.forEach(review => {
+        const rating = review.reviewStar || review.rating || 0;
+        if (rating >= 1 && rating <= 5) {
+            ratingCount[rating]++;
+        }
+    });
+    
+    // Prepare data for Chart.js
+    const labels = ['1 Star', '2 Stars', '3 Stars', '4 Stars', '5 Stars'];
+    const data = [
+        ratingCount[1],
+        ratingCount[2],
+        ratingCount[3],
+        ratingCount[4],
+        ratingCount[5]
+    ];
+    
+    // If no data, show empty state
+    if (data.every(count => count === 0)) {
+        return {
+            filteredData: [1], // Show a single segment for "No Data"
+            filteredLabels: ['No Reviews Available']
+        };
+    }
+    
+    return {
+        filteredData: data,
+        filteredLabels: labels
+    };
 }
 
 function createTokenPerRequestChart(agent) {
