@@ -1,0 +1,12 @@
+:root {
+    --accent: #FF6B6B;
+    --accent-light: #FF8E8E;
+    --accent-dark: #FF4757;
+    --secondary: #4ECDC4;
+    --secondary-light: #7BDDD8;
+    --secondary-dark: #26A69A;
+    --tertiary: #FFD93D;
+    --tertiary-light: #FFE066;
+    --tertiary-dark: #FFC107;
+    --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}

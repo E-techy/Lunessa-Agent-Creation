@@ -1,0 +1,85 @@
+.performance-card {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.performance-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.performance-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #18181B;
+}
+
+.time-filter {
+    font-size: 0.8rem;
+    color: #71717A;
+}
+
+.metrics-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.metric {
+    text-align: center;
+}
+
+.metric-value {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #18181B;
+    transition: transform 0.3s ease;
+}
+
+.metric-label {
+    font-size: 0.7rem;
+    color: #71717A;
+    text-transform: uppercase;
+}
+
+.metric-change {
+    font-size: 0.7rem;
+    margin-top: 0.2rem;
+}
+
+.metric-change.positive {
+    color: #10B981;
+}
+
+.metric-change.negative {
+    color: #EF4444;
+}
+
+.chart-container {
+    height: 100px;
+    position: relative;
+    background: rgba(139, 92, 246, 0.1);
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.chart-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: linear-gradient(45deg, 
+        transparent 0%, 
+        rgba(139, 92, 246, 0.3) 30%, 
+        rgba(16, 185, 129, 0.3) 60%, 
+        rgba(34, 197, 94, 0.3) 100%);
+    clip-path: polygon(0 80%, 15% 60%, 30% 70%, 50% 40%, 70% 30%, 85% 45%, 100% 25%, 100% 100%, 0 100%);
+}

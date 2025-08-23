@@ -1,0 +1,20 @@
+/* CSS OF AGENT SELECTION PAGE */
+
+/* Core Variables and Base Styles */
+@import url('./css_metrics/agent_selection/variables.css');
+@import url('./css_metrics/agent_selection/base.css');
+
+/* Animation Definitions */
+@import url('./css_metrics/agent_selection/animations.css');
+
+/* Component Styles */
+@import url('./css_metrics/agent_selection/header.css');
+@import url('./css_metrics/agent_selection/hero.css');
+@import url('./css_metrics/agent_selection/performance.css');
+@import url('./css_metrics/agent_selection/agents.css');
+@import url('./css_metrics/agent_selection/footer.css');
+
+/* Responsive Design */
+@import url('./css_metrics/agent_selection/responsive.css');
+
+@import url('./css_metrics/agent_selection/footer.css');
