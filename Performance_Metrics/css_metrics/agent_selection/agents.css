@@ -105,3 +105,8 @@
 .agent-row.selected .agent-name {
     color: #8B5CF6 !important;
 }
+
+.error-message{
+    padding: 100px;
+    text-align: center;
+}
