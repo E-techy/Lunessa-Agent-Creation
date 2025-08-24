@@ -1,73 +1,97 @@
 function filterLogsByPeriod(logs, period, now, agent) {
     if (period === 'lifetime') {
-        return logs;
+        return logs; // Show all logs
     }
-    
-    const periodMs = getPeriodMilliseconds(period , agent);
-    const cutoffTime = new Date(now.getTime() - periodMs);
-    
+
+    const { start, end } = getPeriodRange(period, now);
+
     return logs.filter(log => {
         const logTime = new Date(log.timestamp);
-        return logTime >= cutoffTime;
+        return logTime >= start && logTime <= end;
     });
 }
 
-function getPeriodMilliseconds(period,agent) {
-    const msPerDay = 24 * 60 * 60 * 1000;
-    
-    switch(period) {
-        case 'days': return 7 * msPerDay; // Last 7 days
-        case 'weeks': return 4 * 7 * msPerDay; // Last 4 weeks
-        case 'months': return 12 * 30 * msPerDay; // Last 12 months (approx)
-        case 'years': return 5 * 365 * msPerDay; // Last 5 years
-        default: return 7 * msPerDay;
+function getPeriodRange(period, now) {
+    const start = new Date(now);
+    let end = new Date(now);
+
+    switch (period) {
+        case 'days': // Today only
+            start.setHours(0, 0, 0, 0);
+            break;
+
+        case 'weeks': // Current week (Sun → Sat)
+            start.setDate(now.getDate() - now.getDay());
+            start.setHours(0, 0, 0, 0);
+            end = new Date(start);
+            end.setDate(start.getDate() + 6);
+            end.setHours(23, 59, 59, 999);
+            break;
+
+        case 'months': // Current month
+            start.setDate(1);
+            start.setHours(0, 0, 0, 0);
+            end = new Date(start.getFullYear(), start.getMonth() + 1, 0, 23, 59, 59, 999);
+            break;
+
+        case 'years': // Current year
+            start.setMonth(0, 1);
+            start.setHours(0, 0, 0, 0);
+            end = new Date(start.getFullYear(), 11, 31, 23, 59, 59, 999);
+            break;
+
+        default: // fallback = today
+            start.setHours(0, 0, 0, 0);
     }
+
+    return { start, end };
 }
 
-function groupDataByPeriod(logs, period,agent) {
+function groupDataByPeriod(logs, period, agent) {
     const grouped = {};
-    
+
     logs.forEach(log => {
         const date = new Date(log.timestamp);
         let key;
-        
-        switch(period) {
+
+        switch (period) {
             case 'days':
-                key = date.toLocaleDateString();
+                key = `${date.getHours()}:00`; // group by hour
                 break;
             case 'weeks':
-                const weekStart = new Date(date);
-                weekStart.setDate(date.getDate() - date.getDay());
-                key = `Week of ${weekStart.toLocaleDateString()}`;
+                key = date.toLocaleDateString('en-US', { weekday: 'short' });
                 break;
             case 'months':
-                key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+                key = date.getDate().toString(); // group by day number
                 break;
             case 'years':
-                key = String(date.getFullYear());
+                key = date.toLocaleDateString('en-US', { month: 'short' });
+                break;
+            case 'lifetime':
+                key = date.getFullYear().toString();
                 break;
             default:
                 key = date.toLocaleDateString();
         }
-        
+
         grouped[key] = (grouped[key] || 0) + 1;
     });
-    
+
     return grouped;
 }
 
 function getPeriodLabel(period, index, date, agent) {
-    switch(period) {
+    switch (period) {
         case 'days':
-            return date.toLocaleDateString();
+            return `${date.getHours()}:00`;
         case 'weeks':
-            return `Week ${Math.ceil((index + 1) / 7)}`;
+            return date.toLocaleDateString('en-US', { weekday: 'short' });
         case 'months':
-            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+            return date.getDate().toString();
         case 'years':
-            return String(date.getFullYear());
+            return date.toLocaleDateString('en-US', { month: 'short' });
         case 'lifetime':
-            return `Entry ${index + 1}`;
+            return String(date.getFullYear());
         default:
             return `Entry ${index + 1}`;
     }
