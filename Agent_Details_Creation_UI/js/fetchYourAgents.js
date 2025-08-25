@@ -252,6 +252,11 @@ class AgentDataManager {
         const itemsContainer = document.getElementById('itemsContainer');
         if (!itemsContainer) return;
 
+        // ✅ CRITICAL FIX: Reset item count before clearing and populating
+        if (window.ItemManager) {
+            window.ItemManager.resetItemCount();
+        }
+
         // Clear existing items
         itemsContainer.innerHTML = '';
 
@@ -393,6 +398,11 @@ class AgentDataManager {
             agentNameField.readOnly = false;
             agentNameField.style.backgroundColor = '';
             agentNameField.style.color = '';
+        }
+
+        // ✅ CRITICAL FIX: Reset item count before clearing items
+        if (window.ItemManager) {
+            window.ItemManager.resetItemCount();
         }
 
         // Clear items container
