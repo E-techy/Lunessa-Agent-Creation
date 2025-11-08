@@ -36,6 +36,7 @@ async function getDefaultModelConfig() {
  * → Initialize `tokenBalances` with the default model.
  * → Validate details.
  * → Create agent with initialized model fields and empty `modificationHistory`.
+ * ⭐ NEW: Update/Create record in CompanyAgentsRegistered.
  *
  * - If `req.query.agentId` IS provided → **update**:
  * → Ensure agent exists.
@@ -95,7 +96,7 @@ async function addOrUpdateAgent(req, secret) {
       throw new Error(`❌ Validation failed: ${validation.errors.join(", ")}`);
     }
 
-    // Create agent
+    // 1. Create Customer Service Agent
     const newAgent = await prisma.CustomerServiceAgents.create({
       data: {
         ...agentDetails,
@@ -104,6 +105,26 @@ async function addOrUpdateAgent(req, secret) {
       },
     });
 
+    // 2. ⭐ Update CompanyAgentsRegistered Model ⭐
+    // Add the newly created agent record to the user's list
+    const agentRecord = {
+      agentId: newAgent.agentId,
+      agentName: newAgent.agentName,
+    };
+
+    await prisma.CompanyAgentsRegistered.upsert({
+      where: { username: agentDetails.username },
+      update: {
+        totalAgents: { increment: 1 },
+        agents: { push: agentRecord },
+      },
+      create: {
+        username: agentDetails.username,
+        totalAgents: 1,
+        agents: [agentRecord],
+      },
+    });
+    
     return { status: "created", agent: newAgent };
   } 
   
@@ -157,13 +178,11 @@ async function addOrUpdateAgent(req, secret) {
       defaultModel: existingAgent.defaultModel,
     };
 
-    // Update
+    // Update Customer Service Agent
     const updatedAgent = await prisma.CustomerServiceAgents.update({
       where: { agentId: queryAgentId },
       data: {
         ...agentDetails,
-        // The tokenBalances, usingModel, and defaultModel fields are preserved from existingAgent
-        // via the override above, ensuring tokens don't change on a detail update.
         lastModified: now,
         modificationHistory: {
           push: modificationSnapshot,
