@@ -5,7 +5,7 @@
  * the correct format before being validated and passed to the addOrUpdateAgent function.
  *
  * - Converts date strings into Date objects
- * - Ensures items is always an array
+ * - Ensures arrays are always arrays (items, tokenBalances, modificationHistory)
  * - Defaults missing optional values to safe defaults
  *
  * @param {Object} req - Express request object.
@@ -21,13 +21,18 @@
  * @returns {string} agentDetails.agentId - Unique ID for the agent.
  * @returns {string} agentDetails.agentName - Agent’s name.
  * @returns {string} agentDetails.username - Username of the user creating/updating the agent.
- * @returns {Array} agentDetails.items - Array of items handled by the agent.
+ * @returns {Array<Object>} agentDetails.tokenBalances - Array of token balance objects.
+ * @returns {Object|null} agentDetails.usingModel - Currently active model object.
+ * @returns {Object|null} agentDetails.defaultModel - Default fallback model object.
+ * @returns {Array<Object>} agentDetails.items - Array of items handled by the agent.
  * @returns {Date} agentDetails.lastModified - Last modification timestamp.
+ * @returns {Array<Object>} agentDetails.modificationHistory - Agent modification history records.
  */
 function createAgentDetails(req) {
   const body = req.body;
 
   return {
+    // Existing fields
     companyName: body.companyName || "",
     establishmentDate: body.establishmentDate ? new Date(body.establishmentDate) : null,
     companyOwnerName: body.companyOwnerName || "",
@@ -39,6 +44,21 @@ function createAgentDetails(req) {
     username: body.username || "",
     items: Array.isArray(body.items) ? body.items : [],
     lastModified: body.lastModified ? new Date(body.lastModified) : new Date(),
+
+    // ⭐ Added fields from Prisma Schema ⭐
+    // tokenBalances is an array of embedded types
+    tokenBalances: [],
+    
+    // usingModel is an optional embedded type (UsingModel?)
+    // Note: If null is passed, Prisma might set it to an empty object or require all fields if not optional in the DB layer.
+    // For safety, we only include it if present and well-formed in the body.
+    usingModel: body.usingModel && typeof body.usingModel === 'object' ? body.usingModel : null,
+
+    // defaultModel is an optional embedded type (DefaultModel?)
+    defaultModel: body.defaultModel && typeof body.defaultModel === 'object' ? body.defaultModel : null,
+
+    // modificationHistory is an array of embedded types, typically managed by the update logic
+    modificationHistory: Array.isArray(body.modificationHistory) ? body.modificationHistory : [],
   };
 }
 
