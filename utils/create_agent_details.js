@@ -1,3 +1,5 @@
+// utils/create_agent_details.js
+
 /**
  * Extract agent details from the request body and format them into a standardized object.
  *
@@ -31,6 +33,11 @@
 function createAgentDetails(req) {
   const body = req.body;
 
+  // lastModified should not be taken from the body; it is set by the update logic.
+  // We include a default Date just for validation if the body doesn't supply one,
+  // but it will be overwritten in addOrUpdateAgent.
+  const now = new Date();
+
   return {
     // Existing fields
     companyName: body.companyName || "",
@@ -43,21 +50,17 @@ function createAgentDetails(req) {
     agentName: body.agentName || "",
     username: body.username || "",
     items: Array.isArray(body.items) ? body.items : [],
-    lastModified: body.lastModified ? new Date(body.lastModified) : new Date(),
+    lastModified: body.lastModified ? new Date(body.lastModified) : now,
 
-    // ⭐ Added fields from Prisma Schema ⭐
-    // tokenBalances is an array of embedded types
-    tokenBalances: [],
+    // Token balances are managed by the update/create logic (fetched from DB, not request body)
+    tokenBalances: [], 
     
-    // usingModel is an optional embedded type (UsingModel?)
-    // Note: If null is passed, Prisma might set it to an empty object or require all fields if not optional in the DB layer.
-    // For safety, we only include it if present and well-formed in the body.
+    // Optional embedded types from request body (will be overwritten if agent exists)
     usingModel: body.usingModel && typeof body.usingModel === 'object' ? body.usingModel : null,
 
-    // defaultModel is an optional embedded type (DefaultModel?)
     defaultModel: body.defaultModel && typeof body.defaultModel === 'object' ? body.defaultModel : null,
 
-    // modificationHistory is an array of embedded types, typically managed by the update logic
+    // modificationHistory is typically managed by the update logic
     modificationHistory: Array.isArray(body.modificationHistory) ? body.modificationHistory : [],
   };
 }

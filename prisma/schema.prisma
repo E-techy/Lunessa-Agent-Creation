@@ -1,3 +1,5 @@
+// prisma/schema.prisma
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -83,6 +85,10 @@ type AgentModification {
   companyHumanServiceNumber String
   companyEmail              String
   companyDescription        String
+  // ⭐ ADDED FIELDS FOR MODIFICATION HISTORY SNAPSHOT ⭐
+  tokenBalances             TokenBalance[]
+  usingModel                UsingModel?
+  defaultModel              DefaultModel?
 }
 
 // 2️⃣ Agent Usage Statistics
@@ -137,3 +143,25 @@ type AgentRecord {
   agentName String
 }
 
+/// AI models, pricing data
+model AIModel {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  
+  modelName     String   @unique                           // e.g. "gpt-4", "gpt-3.5", "claude-3-opus"
+  provider      String                                   // e.g. "OpenAI", "Anthropic", "Google"
+  
+  pricePerToken Float                                    // price per token (in USD or INR)
+  currency      String   @default("USD")                 // currency for price, default USD
+
+  availableTill DateTime                                 // until when this model will be available (like end of support)
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model DefaultModelNames {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  modelName     DefaultModel?
+  // New field to store the default number of tokens for new agents
+  defaultTokens Int      @default(1000000)
+}
