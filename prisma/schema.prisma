@@ -19,12 +19,44 @@ model CustomerServiceAgents {
   agentId                   String               @unique
   agentName                 String
   username                  String               @unique // New unique username field
-  availableTokens           Int                  @default(0)
+  createdAt                 DateTime             @default(now())
+  
+  // New field to store per-model token counts and status
+  tokenBalances             TokenBalance[]       
+
+  // Currently active model in use for this agent
+  usingModel                UsingModel?
+
+  // Default model when no explicit usingModel is set
+  defaultModel              DefaultModel?
+
   items                     Item[]
 
   // New fields
   lastModified              DateTime             @default(now())
   modificationHistory       AgentModification[]
+} 
+
+// 2️⃣ Token balances for all models the agent owns
+type TokenBalance {
+  modelName        String
+  availableTokens  Int
+  status           String  @default("inactive")  // e.g. "active" | "inactive"
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @default(now())
+}
+
+// 3️⃣ The currently active model with tokens in use
+type UsingModel {
+  modelName        String
+  availableTokens  Int
+  status           String @default("inactive")   // e.g. "active" | "inactive"
+}
+
+// 4️⃣ The default fallback model and its token availability
+type DefaultModel {
+  modelName        String
+  availableTokens  Int
 }
 
 // Embedded Item schema
@@ -39,6 +71,18 @@ type Item {
 type ProblemSolution {
   problem  String
   solution String
+}
+
+// Embedded type for agent modification history
+type AgentModification {
+  timestamp                 DateTime @default(now())
+  items                     Item[]
+  companyName               String
+  establishmentDate         DateTime
+  companyOwnerName          String
+  companyHumanServiceNumber String
+  companyEmail              String
+  companyDescription        String
 }
 
 // 2️⃣ Agent Usage Statistics
@@ -93,14 +137,3 @@ type AgentRecord {
   agentName String
 }
 
-// Embedded type for agent modification history
-type AgentModification {
-  timestamp                 DateTime @default(now())
-  items                     Item[]
-  companyName               String
-  establishmentDate         DateTime
-  companyOwnerName          String
-  companyHumanServiceNumber String
-  companyEmail              String
-  companyDescription        String
-}
