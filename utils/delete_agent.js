@@ -1,14 +1,7 @@
 /**
  * Utility function to delete an agent and all their related records from the database.
- *
- * This function performs the following:
- * 1. Finds the agent in `CustomerServiceAgents` using `agentId`.
- * 2. Verifies that the `username` matches.
- * 3. If valid, deletes all related records:
- *    - CustomerServiceAgents
- *    - AgentUsageStatistics
- *    - AgentRequestsHandledLogs
- *    - Removes agent from CompanyAgentsRegistered.agents array
+ * This function uses a Prisma transaction to ensure that all deletions either succeed
+ * together or fail and roll back together (atomicity).
  *
  * @module utils/delete_agent
  */
@@ -17,18 +10,13 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 /**
- * Delete an agent and all their related data.
+ * Delete an agent and all their related data using a transaction.
  *
  * @async
  * @function deleteAgent
  * @param {string} username - The username of the agent owner.
  * @param {string} agentId - The unique agent ID to be deleted.
  * @returns {Promise<{ success: boolean, message: string }>}
- *
- * @example
- * const result = await deleteAgent("aman1234", "agent-001");
- * console.log(result);
- * // { success: true, message: "Agent and related data deleted successfully." }
  */
 async function deleteAgent(username, agentId) {
   try {
@@ -42,50 +30,73 @@ async function deleteAgent(username, agentId) {
     }
 
     if (agent.username !== username) {
-      return { success: false, message: "Username does not match agent record." };
+      return { success: false, message: "Username does not match agent record or agent does not belong to this user." };
     }
 
-    // 2️⃣ Delete from CustomerServiceAgents
-    await prisma.CustomerServiceAgents.delete({
-      where: { agentId },
+    // 2️⃣ Fetch the CompanyAgentsRegistered record to prepare for the array update
+    const companyRecord = await prisma.CompanyAgentsRegistered.findUnique({
+      where: { username: username }
     });
 
-    // 3️⃣ Delete from AgentUsageStatistics
-    await prisma.AgentUsageStatistics.deleteMany({
-      where: { agentId },
-    });
+    if (!companyRecord) {
+      // It's crucial for the transaction that we only proceed if all prerequisite data exists
+      return { success: false, message: "Associated company registration record not found." };
+    }
 
-    // 4️⃣ Delete from AgentRequestsHandledLogs
-    await prisma.AgentRequestsHandledLogs.deleteMany({
-      where: { agentId },
-    });
+    // Filter out the deleted agent from the agents array BEFORE the transaction starts
+    const updatedAgents = companyRecord.agents.filter(a => a.agentId !== agentId);
+    const agentWasPresent = companyRecord.agents.length !== updatedAgents.length;
 
-    // 5️⃣ Remove from CompanyAgentsRegistered.agents[]
-    await prisma.CompanyAgentsRegistered.updateMany({
-      data: {
-        agents: {
-          set: [], // reset, then add back without this agent
-        },
-      },
-    });
+    if (!agentWasPresent) {
+        console.warn(`Agent ${agentId} was not found in the CompanyAgentsRegistered list for user ${username}. Proceeding with agent deletion from other models.`);
+    }
 
-    // ⚡ Rebuild agents array excluding deleted one
-    const allCompanies = await prisma.CompanyAgentsRegistered.findMany();
-    for (const company of allCompanies) {
-      const updatedAgents = company.agents.filter(a => a.agentId !== agentId);
-      await prisma.CompanyAgentsRegistered.update({
-        where: { id: company.id },
-        data: { agents: updatedAgents },
+    // 3️⃣ Use Prisma interactive transaction for atomicity across models
+    await prisma.$transaction(async (tx) => {
+      // 3.1 Delete from CustomerServiceAgents
+      await tx.CustomerServiceAgents.delete({
+        where: { agentId },
       });
-    }
 
-    return { success: true, message: "Agent and related data deleted successfully." };
+      // 3.2 Delete from AgentUsageStatistics
+      // Using deleteMany because these are non-unique related records
+      await tx.AgentUsageStatistics.deleteMany({
+        where: { agentId },
+      });
+
+      // 3.3 Delete from AgentRequestsHandledLogs
+      await tx.AgentRequestsHandledLogs.deleteMany({
+        where: { agentId },
+      });
+
+      // 3.4 Update CompanyAgentsRegistered (This is the critical step that needed atomicity)
+      await tx.CompanyAgentsRegistered.update({
+        where: { username: username },
+        data: {
+          agents: updatedAgents, // Set the filtered array
+          totalAgents: {
+            // Decrement totalAgents only if the agent was found and removed in the array check
+            decrement: agentWasPresent ? 1 : 0
+          }
+        },
+      });
+      // If any of the operations above fail, the transaction (tx) will roll back, 
+      // automatically restoring the deleted CustomerServiceAgents record.
+    });
+
+    return { success: true, message: "Agent and all related data deleted successfully." };
   } catch (error) {
-    console.error("❌ Error deleting agent:", error);
-    return { success: false, message: "Error deleting agent." };
+    console.error("❌ Error deleting agent (Transaction failed):", error);
+    
+    // Check for specific Prisma errors
+    if (error.code === 'P2025') {
+        return { success: false, message: `Deletion failed: One or more records were not found. Details: ${error.meta.cause}` };
+    }
+    
+    return { success: false, message: "An error occurred during agent deletion. All changes were rolled back." };
   } finally {
     await prisma.$disconnect();
   }
 }
 
-module.exports =  deleteAgent;
+module.exports = deleteAgent;
