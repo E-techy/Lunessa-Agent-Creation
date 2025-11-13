@@ -127,7 +127,7 @@ function populateServices(agent) {
 }
 
 // ============================================================
-// Reviews Pagination (16 per batch, 4x4 grid)
+// Reviews Pagination (16 per batch, 4x4 grid + back button)
 // ============================================================
 
 let currentReviewIndex = 0;
@@ -138,7 +138,8 @@ function populateReviews(agent) {
     currentReviewsData = agent.customerReviews || [];
     renderReviewBatch(0);
 
-    const loadMoreBtn = document.getElementById("loadMoreReviewsBtn");
+    const loadMoreBtn = document.getElementById("reviewsLoadMoreBtn");
+    const backBtn = document.getElementById("reviewsBackBtn");
 
     if (loadMoreBtn) {
         loadMoreBtn.onclick = function () {
@@ -151,6 +152,24 @@ function populateReviews(agent) {
             }
 
             renderReviewBatch(nextIndex);
+            backBtn.style.display = "inline-flex";
+        };
+    }
+
+    if (backBtn) {
+        backBtn.onclick = function () {
+            const prevIndex = currentReviewIndex - REVIEWS_PER_PAGE;
+
+            if (prevIndex < 0) return;
+
+            renderReviewBatch(prevIndex);
+
+            loadMoreBtn.textContent = "Load More Reviews";
+            loadMoreBtn.disabled = false;
+
+            if (prevIndex === 0) {
+                backBtn.style.display = "none";
+            }
         };
     }
 }
@@ -182,13 +201,14 @@ function renderReviewBatch(startIndex) {
                         </div>
                     </div>
                     <p class="review-comment">${review.comment}</p>
-                    <span class="review-date">${date.toLocaleDateString()} at ${date.toLocaleTimeString()}</span>
+                    <span class="review-date">
+                        ${date.toLocaleDateString()} at ${date.toLocaleTimeString()}
+                    </span>
                 </div>
             `;
         })
         .join("");
 }
-
 
 // ============================================================
 // Modification History (Compact Grid + Real Data + Pagination)
