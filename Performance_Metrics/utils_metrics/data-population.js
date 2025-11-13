@@ -127,35 +127,68 @@ function populateServices(agent) {
 }
 
 // ============================================================
-// Reviews
+// Reviews Pagination (16 per batch, 4x4 grid)
 // ============================================================
+
+let currentReviewIndex = 0;
+const REVIEWS_PER_PAGE = 16;
+let currentReviewsData = [];
+
 function populateReviews(agent) {
+    currentReviewsData = agent.customerReviews || [];
+    renderReviewBatch(0);
+
+    const loadMoreBtn = document.getElementById("loadMoreReviewsBtn");
+
+    if (loadMoreBtn) {
+        loadMoreBtn.onclick = function () {
+            const nextIndex = currentReviewIndex + REVIEWS_PER_PAGE;
+
+            if (nextIndex >= currentReviewsData.length) {
+                loadMoreBtn.disabled = true;
+                loadMoreBtn.textContent = "No More Reviews";
+                return;
+            }
+
+            renderReviewBatch(nextIndex);
+        };
+    }
+}
+
+function renderReviewBatch(startIndex) {
     const grid = document.getElementById("reviewsGrid");
     if (!grid) return;
-    const reviews = agent.customerReviews || [];
 
-    grid.innerHTML = reviews
-        .map(r => {
-            const d = new Date(r.timestamp);
-            const stars = "★".repeat(r.reviewStar) + "☆".repeat(5 - r.reviewStar);
+    const endIndex = Math.min(startIndex + REVIEWS_PER_PAGE, currentReviewsData.length);
+    const batch = currentReviewsData.slice(startIndex, endIndex);
+
+    currentReviewIndex = startIndex;
+
+    grid.innerHTML = batch
+        .map(review => {
+            const date = new Date(review.timestamp);
+            const stars = "★".repeat(review.reviewStar) + "☆".repeat(5 - review.reviewStar);
+
             return `
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="reviewer-info">
-                        <div class="reviewer-avatar">${r.username[0]}</div>
-                        <span class="reviewer-name">${r.username}</span>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">${review.username[0]}</div>
+                            <span class="reviewer-name">${review.username}</span>
+                        </div>
+                        <div class="review-rating">
+                            <span class="stars">${stars}</span>
+                            <span class="rating-number">${review.reviewStar}/5</span>
+                        </div>
                     </div>
-                    <div class="review-rating">
-                        <span class="stars">${stars}</span>
-                        <span class="rating-number">${r.reviewStar}/5</span>
-                    </div>
+                    <p class="review-comment">${review.comment}</p>
+                    <span class="review-date">${date.toLocaleDateString()} at ${date.toLocaleTimeString()}</span>
                 </div>
-                <p class="review-comment">${r.comment}</p>
-                <span class="review-date">${d.toLocaleDateString()} at ${d.toLocaleTimeString()}</span>
-            </div>`;
+            `;
         })
         .join("");
 }
+
 
 // ============================================================
 // Modification History (Compact Grid + Real Data + Pagination)

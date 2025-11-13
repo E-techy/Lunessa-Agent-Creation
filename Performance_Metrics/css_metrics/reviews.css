@@ -12,9 +12,10 @@
 
 .reviews-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
 }
+
 
 .review-card {
     background: rgba(244, 244, 245, 0.05);
@@ -128,4 +129,22 @@
 
 .load-more-btn:hover svg {
     transform: translateY(2px);
+}
+
+@media (max-width: 1200px) {
+    .reviews-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .reviews-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .reviews-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }
