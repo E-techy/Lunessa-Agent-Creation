@@ -14,7 +14,6 @@ function capitalizeFirstLetter(str) {
 // ============================================================
 function populateAgentInfo(agent) {
     const details = agent.agentBasicDetails;
-
     const get = id => document.getElementById(id);
 
     const agentNameEl = get("agentName");
@@ -159,7 +158,7 @@ function populateReviews(agent) {
 }
 
 // ============================================================
-// Modification History Grid Layout (Compact + Real Data)
+// Modification History (Compact Grid + Real Data + Pagination)
 // ============================================================
 let currentHistoryIndex = 0;
 const ITEMS_PER_PAGE = 9;
@@ -173,16 +172,28 @@ function populateModificationHistory(agent) {
     currentHistoryData = agent.agentBasicDetails.modificationHistory || [];
     renderHistoryBatch(container, currentHistoryData, 0);
 
-    const btn = document.getElementById("loadMoreHistoryBtn");
-    if (btn) {
-        btn.onclick = function () {
+    const loadMoreBtn = document.getElementById("loadMoreHistoryBtn");
+    const backBtn = document.getElementById("backHistoryBtn");
+
+    if (loadMoreBtn && backBtn) {
+        loadMoreBtn.onclick = function () {
             const next = currentHistoryIndex + ITEMS_PER_PAGE;
             if (next >= currentHistoryData.length) {
-                btn.disabled = true;
-                btn.textContent = "NO MORE RECORDS";
+                loadMoreBtn.disabled = true;
+                loadMoreBtn.textContent = "NO MORE RECORDS";
                 return;
             }
             renderHistoryBatch(container, currentHistoryData, next);
+            backBtn.style.display = "inline-flex";
+        };
+
+        backBtn.onclick = function () {
+            const prev = currentHistoryIndex - ITEMS_PER_PAGE;
+            if (prev < 0) return;
+            renderHistoryBatch(container, currentHistoryData, prev);
+            loadMoreBtn.textContent = "Load More History";
+            loadMoreBtn.disabled = false;
+            if (prev === 0) backBtn.style.display = "none";
         };
     }
 }
@@ -236,7 +247,7 @@ function toggleModificationDetails(index) {
     expanded.id = "expanded-details";
     expanded.className = "expanded-mod-details";
 
-    // Create item details dynamically
+    // Real items HTML
     const itemsHTML = entry.items
         ? entry.items
               .map(

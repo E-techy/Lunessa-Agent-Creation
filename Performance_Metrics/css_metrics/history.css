@@ -665,3 +665,19 @@
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+.load-more-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+#backHistoryBtn {
+  background: linear-gradient(135deg, #6d28d9, #7c3aed);
+}
+
+#backHistoryBtn:hover {
+  background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+  transform: translateY(-3px);
+}
